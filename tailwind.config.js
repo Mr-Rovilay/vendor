@@ -1,7 +1,12 @@
+import tailwindcssAnimate from "tailwindcss-animate";
+
 /** @type {import('tailwindcss').Config} */
 export default {
     darkMode: ["class"],
-    content: [],
+    content: [
+		'./pages/**/*.{html,js}',
+		'./components/**/*.{html,js}',
+	  ],
   theme: {
   	extend: {
   		borderRadius: {
@@ -53,6 +58,6 @@ export default {
   		}
   	}
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [tailwindcssAnimate],
 }
 
