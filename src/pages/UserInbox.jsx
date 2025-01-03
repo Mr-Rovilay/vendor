@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import api from "@/utils/server";
-import { format } from "date-fns";
+import { format } from "timeago.js";
 import { ArrowLeft, ChevronDown, Circle, ImageIcon, Send } from "lucide-react";
 import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
@@ -44,7 +44,7 @@ const MessageBubble = ({ message, isSender, userData, time }) => {
             <p>{message.text}</p>
           </div>
         )}
-        <span className="mt-1 text-xs text-gray-500">{format(time)}</span>
+     <span className="mt-1 text-xs text-gray-500">{format(time)}</span>
       </div>
     </div>
   );

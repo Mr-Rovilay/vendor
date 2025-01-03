@@ -36,60 +36,70 @@ const PaymentMethods = () => {
   };
 
   return (
-    <Card className="p-2 md:p-4">
-      <CardHeader>
-        <div className="flex flex-col justify-between space-y-2 md:flex-row md:items-center md:space-y-0">
-          <CardTitle className="flex items-center text-lg md:text-xl">
-            <CreditCard className="w-6 h-6 mr-2" />
+    <Card className="w-full max-w-4xl mx-auto bg-white shadow-lg">
+      <CardHeader className="border-b border-gray-100">
+        <div className="flex flex-col justify-between space-y-4 md:flex-row md:items-center md:space-y-0">
+          <CardTitle className="flex items-center text-lg font-semibold text-gray-900 md:text-xl">
+            <CreditCard className="w-6 h-6 mr-2 text-emerald-600" />
             Payment Methods
           </CardTitle>
           <Dialog>
             <DialogTrigger asChild>
-              <Button variant="outline" className="w-full md:w-auto">
-                <Plus className="w-4 h-4 mr-2" /> Add Card
+              <Button 
+                variant="outline" 
+                className="w-full transition-colors md:w-auto hover:bg-emerald-50 hover:text-emerald-600 hover:border-emerald-200"
+              >
+                <Plus className="w-4 h-4 mr-2" /> Add Payment Method
               </Button>
             </DialogTrigger>
-            <DialogContent>
+            <DialogContent className="sm:max-w-md">
               <DialogHeader>
-                <DialogTitle>Add New Payment Method</DialogTitle>
+                <DialogTitle className="text-xl font-semibold text-gray-900">Add New Payment Method</DialogTitle>
               </DialogHeader>
-              <div className="space-y-4">
-                <div>
-                  <Label>Card Number</Label>
+              <div className="mt-6 space-y-6">
+                <div className="space-y-2">
+                  <Label className="text-sm font-medium text-gray-700">Card Number</Label>
                   <Input 
                     placeholder="1234 5678 9012 3456"
                     value={newCard.cardNumber}
                     onChange={(e) => setNewCard({ ...newCard, cardNumber: e.target.value })}
+                    className="focus:ring-emerald-500 focus:border-emerald-500"
                   />
                 </div>
-                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                  <div>
-                    <Label>Card Holder</Label>
+                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                  <div className="space-y-2">
+                    <Label className="text-sm font-medium text-gray-700">Card Holder</Label>
                     <Input 
                       placeholder="John Doe"
                       value={newCard.cardHolder}
                       onChange={(e) => setNewCard({ ...newCard, cardHolder: e.target.value })}
+                      className="focus:ring-emerald-500 focus:border-emerald-500"
                     />
                   </div>
-                  <div>
-                    <Label>Expiry Date</Label>
+                  <div className="space-y-2">
+                    <Label className="text-sm font-medium text-gray-700">Expiry Date</Label>
                     <Input 
                       placeholder="MM/YY"
                       value={newCard.expiryDate}
                       onChange={(e) => setNewCard({ ...newCard, expiryDate: e.target.value })}
+                      className="focus:ring-emerald-500 focus:border-emerald-500"
                     />
                   </div>
                 </div>
-                <div>
-                  <Label>CVV</Label>
+                <div className="space-y-2">
+                  <Label className="text-sm font-medium text-gray-700">CVV</Label>
                   <Input 
                     placeholder="123"
                     type="password"
                     value={newCard.cvv}
                     onChange={(e) => setNewCard({ ...newCard, cvv: e.target.value })}
+                    className="focus:ring-emerald-500 focus:border-emerald-500"
                   />
                 </div>
-                <Button onClick={handleAddCard} className="w-full">
+                <Button 
+                  onClick={handleAddCard} 
+                  className="w-full text-white transition-colors bg-emerald-600 hover:bg-emerald-700"
+                >
                   Add Card
                 </Button>
               </div>
@@ -97,53 +107,57 @@ const PaymentMethods = () => {
           </Dialog>
         </div>
       </CardHeader>
-      <CardContent>
-        {paymentMethods.map((card) => (
-          <div 
-            key={card.id} 
-            className="flex flex-col justify-between p-4 border-b sm:flex-row sm:items-center last:border-b-0 hover:bg-gray-50"
-          >
-            <div className="flex items-center space-x-4">
-              <CreditCard className="w-6 h-6 text-gray-500" />
-              <div>
-                <div className="text-sm font-medium sm:text-base">
-                  {card.type} **** {card.lastFour}
+      <CardContent className="p-0">
+        <div className="divide-y divide-gray-100">
+          {paymentMethods.map((card) => (
+            <div 
+              key={card.id} 
+              className="flex flex-col p-4 transition-colors sm:flex-row sm:items-center sm:justify-between hover:bg-gray-50"
+            >
+              <div className="flex items-center space-x-4">
+                <div className="flex items-center justify-center w-10 h-10 rounded-full bg-emerald-100">
+                  <CreditCard className="w-6 h-6 text-emerald-600" />
                 </div>
-                <div className="text-xs text-gray-500 sm:text-sm">
-                  Expires {card.expiryDate}
+                <div>
+                  <div className="text-sm font-medium text-gray-900 sm:text-base">
+                    {card.type} **** {card.lastFour}
+                  </div>
+                  <div className="text-xs text-gray-500 sm:text-sm">
+                    Expires {card.expiryDate}
+                  </div>
                 </div>
+                {card.isDefault && (
+                  <div className="flex items-center px-2 py-1 text-xs font-medium rounded-full text-emerald-700 bg-emerald-100">
+                    <CheckCircle className="w-4 h-4 mr-1" />
+                    Default
+                  </div>
+                )}
               </div>
-              {card.isDefault && (
-                <div className="flex items-center text-sm text-green-600">
-                  <CheckCircle className="w-4 h-4 mr-1" />
-                  Default
-                </div>
-              )}
+              <div className="flex items-center mt-4 space-x-3 sm:mt-0">
+                {!card.isDefault && (
+                  <Button 
+                    variant="outline" 
+                    size="sm"
+                    className="text-xs transition-colors sm:text-sm hover:bg-emerald-50 hover:text-emerald-600 hover:border-emerald-200"
+                    onClick={() => handleSetDefault(card.id)}
+                  >
+                    Set as Default
+                  </Button>
+                )}
+                {!card.isDefault && (
+                  <Button 
+                    variant="destructive" 
+                    size="sm"
+                    className="text-xs sm:text-sm"
+                    onClick={() => handleDeleteCard(card.id)}
+                  >
+                    <Trash2 className="w-4 h-4" />
+                  </Button>
+                )}
+              </div>
             </div>
-            <div className="flex items-center mt-2 space-x-2 sm:mt-0">
-              {!card.isDefault && (
-                <Button 
-                  variant="outline" 
-                  size="sm"
-                  className="text-xs sm:text-sm"
-                  onClick={() => handleSetDefault(card.id)}
-                >
-                  Set as Default
-                </Button>
-              )}
-              {!card.isDefault && (
-                <Button 
-                  variant="destructive" 
-                  size="sm"
-                  className="text-xs sm:text-sm"
-                  onClick={() => handleDeleteCard(card.id)}
-                >
-                  <Trash2 className="w-4 h-4" />
-                </Button>
-              )}
-            </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </CardContent>
     </Card>
   );
