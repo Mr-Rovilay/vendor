@@ -2,7 +2,7 @@ import { getAllEvents } from "@/redux/actions/eventAction";
 import { Loader2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { CardDescription, CardHeader, CardTitle } from "../ui/card";
+import { CardHeader, CardTitle } from "../ui/card";
 import EventCard from "./EventCard";
 
 const Events = () => {
