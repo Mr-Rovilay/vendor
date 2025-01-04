@@ -177,10 +177,7 @@ const DashboardMessages = () => {
     const getConversations = async () => {
       try {
         const response = await api.get(
-          `/conversation/get-all-conversation-seller/${seller?._id}`,
-          {
-            withCredentials: true,
-          }
+          `/conversation/get-all-conversation-seller/${seller?._id}`
         );
         setConversations(response.data.conversations);
       } catch (error) {
