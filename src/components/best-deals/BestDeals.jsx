@@ -24,23 +24,34 @@ const BestDeals = () => {
   }, [allProducts]);
 
   return (
-    <div className="bg-gradient-to-br from-blue-50 to-white">
+    <div className="bg-gradient-to-br from-emerald-50 to-white">
       <div className="max-pad-container">
-        <CardHeader>
-          <CardTitle className="text-3xl font-bold text-center">
+        <CardHeader className="mb-8">
+          <CardTitle className="text-3xl font-bold text-center text-gray-800">
             Best Deals
+            <div className="w-20 h-1 mx-auto mt-2 rounded bg-emerald-500"></div>
           </CardTitle>
+          <p className="mt-4 text-center text-gray-600">
+            Discover our most popular and best-selling items
+          </p>
         </CardHeader>
-        <div className="grid grid-cols-1 gap-[20px] md:grid-cols-3 md:gap-[25px] lg:grid-cols-5 lg:gap-[25px] xl:grid-cols-5 xl:gap-[30px] mb-12 border-0">
-          {
-            <>
-              {data &&
-                data.map((i, index) => {
-                  return <ProductCard data={i} key={index} />;
-                })}
-            </>
-          }
+        
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+          {data && data.map((item, index) => (
+            <div 
+              key={index}
+              className="transition-transform duration-300 hover:-translate-y-1"
+            >
+              <ProductCard data={item} />
+            </div>
+          ))}
         </div>
+        
+        {data.length === 0 && (
+          <div className="flex items-center justify-center w-full h-40">
+            <p className="text-lg text-gray-500">Loading best deals...</p>
+          </div>
+        )}
       </div>
     </div>
   );

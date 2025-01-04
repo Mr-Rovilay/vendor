@@ -44,7 +44,7 @@ const Testimonial = () => {
       <div className="max-w-6xl px-4 py-16 mx-auto">
         {/* Header Section with fade-in and slide-down effect */}
         <div className={`text-center mb-16 transition-all duration-1000 transform ${isVisible ? 'translate-y-0 opacity-100' : '-translate-y-10 opacity-0'}`}>
-          <h1 className="mb-4 text-4xl font-bold text-gray-900">
+          <h1 className="mb-4 text-2xl font-bold text-gray-900 md:text-4xl">
             What Our Vendors Say
           </h1>
           <p className="max-w-2xl mx-auto text-lg text-gray-600">
@@ -109,8 +109,8 @@ const Testimonial = () => {
         <div className={`text-center mt-16 transition-all duration-1000 delay-1000 transform ${
           isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
         }`}>
-          <button  className="px-8 py-3 font-medium text-white transition-all duration-500 bg-green-600 rounded-lg hover:bg-green-700 hover:scale-105 animate-pulse hover:animate-none">
-            Join Our Marketplace By Creating Shop
+          <button  className="px-4 py-3 font-medium text-white transition-all duration-500 bg-green-600 rounded-lg hover:bg-green-700 hover:scale-105 animate-pulse hover:animate-none">
+            Join Our Marketplace
           </button>
         </div>
       </div>
