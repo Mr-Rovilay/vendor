@@ -18,6 +18,7 @@ import ChangePassword from "./ChangePassword";
 import TrackUserOrder from "./TrackUserOrder";
 import AllRefundOrders from "./AllRefundOrders";
 import AllOrders from "./AllOrders";
+import api from "@/utils/server";
 
 
 const ProfileContent = ({ active }) => {
