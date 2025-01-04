@@ -109,10 +109,10 @@ const Faq = () => {
       return (
         <div className="mb-5 max-pad-container">
             <CardHeader className="text-center">
-              <CardTitle className="mb-4 text-4xl font-bold">
+              <CardTitle className="mb-4 text-xl md:text-4xl font-bold text-emerald-600">
                 Customer Support Center
               </CardTitle>
-              <p className="text-muted-foreground">
+              <p className="text-muted-foreground text-sm">
                 Everything you need to know about ordering, shipping, and returns
               </p>
             </CardHeader>
@@ -137,7 +137,7 @@ const Faq = () => {
                   <div key={catIndex} className="mb-8">
                     <div className="flex items-center mb-4">
                       {category.icon}
-                      <h2 className="text-2xl font-semibold">{category.title}</h2>
+                      <h2 className="text-xl md:text-2xl font-semibold">{category.title}</h2>
                     </div>
                     
                     <Accordion type="single" collapsible>

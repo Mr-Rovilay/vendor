@@ -46,7 +46,7 @@ const WishlistSidebar = () => {
       <Button
         variant="ghost"
         size="icon"
-        className="relative"
+        className="relative w-8 h-8 rounded-full"
         onClick={() => setOpenWishlist(true)}
       >
         <Heart className="w-5 h-5" />

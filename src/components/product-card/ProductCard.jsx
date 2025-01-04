@@ -55,17 +55,16 @@ const ProductCard = ({ data, isEvent }) => {
   const displayName = data.name.length > 30 ? `${data.name.slice(0, 30)}...` : data.name;
 
   return (
-    <Card className="w-full max-w-sm mx-auto transition-all duration-300 hover:shadow-lg">
+    <Card className="w-full max-w-sm mx-auto">
       <CardContent className="p-4">
-        <div className="relative group">
-          <Link to={`${isEvent === true ? `/product/${data._id}?isEvent=true` : `/product/${data._id}`}`}>
+        <div className="relative">
+        <Link to={`${isEvent === true ? `/product/${data._id}?isEvent=true` : `/product/${data._id}`}`}>
             <img
               src={data.images && data.images?.[0]?.url}
-              className="object-cover w-full h-48 transition-transform duration-300 rounded-md group-hover:scale-105"
-              alt={data.name}
+              className="object-cover w-full h-48 rounded-md"
             />
           </Link>
-          <div className="absolute flex flex-col space-y-2 transition-opacity duration-300 opacity-0 top-2 right-1 group-hover:opacity-100">
+          <div className="absolute flex flex-col space-y-2 top-2 right-1">
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
@@ -73,17 +72,18 @@ const ProductCard = ({ data, isEvent }) => {
                     variant="secondary"
                     size="icon"
                     onClick={handleWishlistToggle}
-                    className="bg-white shadow-md hover:bg-emerald-50"
                   >
                     <Heart
-                      className={`w-4 h-4 transition-colors duration-200 ${
-                        isFavorite ? "fill-red-500 text-red-500" : "text-emerald-600 hover:text-emerald-700"
+                      className={`w-4 h-4 ${
+                        isFavorite ? "fill-red-500 text-red-500" : ""
                       }`}
                     />
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent>
-                  <p>{isFavorite ? "Remove from wishlist" : "Add to wishlist"}</p>
+                  <p>
+                    {isFavorite ? "Remove from wishlist" : "Add to wishlist"}
+                  </p>
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
@@ -94,9 +94,8 @@ const ProductCard = ({ data, isEvent }) => {
                     variant="secondary"
                     size="icon"
                     onClick={() => setIsDetailsOpen(true)}
-                    className="bg-white shadow-md hover:bg-emerald-50"
                   >
-                    <Eye className="w-4 h-4 text-emerald-600 hover:text-emerald-700" />
+                    <Eye className="w-4 h-4" />
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent>
@@ -111,9 +110,8 @@ const ProductCard = ({ data, isEvent }) => {
                     variant="secondary"
                     size="icon"
                     onClick={handleAddToCart}
-                    className="bg-white shadow-md hover:bg-emerald-50"
                   >
-                    <ShoppingCart className="w-4 h-4 text-emerald-600 hover:text-emerald-700" />
+                    <ShoppingCart className="w-4 h-4" />
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent>
@@ -126,35 +124,30 @@ const ProductCard = ({ data, isEvent }) => {
         <div className="mt-4">
           <Link
             to={`/shop/preview/${data?.shop._id}`}
-            className="text-sm font-medium transition-colors duration-200 text-emerald-600 hover:text-emerald-700 hover:underline"
+            className="text-sm font-bold text-green-400 hover:underline"
           >
             {data.shop.name}
           </Link>
-          <Link 
-            to={`${isEvent === true ? `/product/${data._id}?isEvent=true` : `/product/${data._id}`}`} 
-            className="block mt-1 transition-colors duration-200 group"
-          >
-            <h3 className="text-lg font-semibold leading-tight text-gray-800 capitalize group-hover:text-emerald-600">
+          <Link to={`${isEvent === true ? `/product/${data._id}?isEvent=true` : `/product/${data._id}`}`} className="block mt-1">
+            <h3 className="text-lg font-semibold leading-tight lowercase">
               {displayName}
             </h3>
           </Link>
-          <div className="flex items-center mt-2 space-x-1">
+          <div className="flex items-center mt-2 text-xs">
             <Ratings rating={data?.ratings} />
           </div>
         </div>
       </CardContent>
-      <div className="flex items-center justify-between px-4 pb-4">
-        <div className="flex items-baseline gap-2">
+      <div className="flex items-center justify-between px-4 pb-2">
+        <div className="flex gap-2">
           {data.originalPrice !== data.discountPrice && (
             <span className="text-sm text-red-500 line-through text-muted-foreground">
               ${data.originalPrice}
             </span>
           )}
-          <span className="text-lg font-bold text-gray-900">${productPrice}</span>
+          <span className="text-sm font-bold">${productPrice}</span>
         </div>
-        <Badge variant="secondary" className="bg-emerald-100 text-emerald-700">
-          {data?.sold_out} sold
-        </Badge>
+        <Badge variant="secondary">{data?.sold_out} sold</Badge>
       </div>
       {isDetailsOpen && (
         <ProductDetailsCard setOpen={setIsDetailsOpen} data={data} />

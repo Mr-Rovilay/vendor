@@ -5,7 +5,7 @@ import { Search, X, Store, Menu } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { loadSeller, loadUser } from "@/redux/actions/user";
 import { DropdownMenu } from "../ui/dropdown-menu";
-import { categoriesData, productData } from "@/static/data";
+import { categoriesData} from "@/static/data";
 import { Input } from "../ui/input";
 import {
   Sheet,
@@ -304,7 +304,7 @@ const Header = () => {
               </Link>
             </Button>
 
-            <div className="flex space-x-3">
+            <div className="flex space-x-3 items-center">
               <WishlistSidebar />
               <CartSidebar />
               {isAuthenticated ? (
@@ -356,7 +356,7 @@ const Header = () => {
         >
           <div className="items-center justify-between mx-auto md:flex">
             {/* Categories Dropdown */}
-            <div className="flex gap-1 mb-3 md:mb-0">
+            <div className="flex gap-1 mb-3 md:mb-0 items-center">
               <DropdownMenu>
                 <Dropdown
                   categoriesData={categoriesData}
