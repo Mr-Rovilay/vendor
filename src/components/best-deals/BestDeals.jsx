@@ -27,11 +27,11 @@ const BestDeals = () => {
     <div className="bg-gradient-to-br from-emerald-50 to-white">
       <div className="max-pad-container">
         <CardHeader className="mb-8">
-          <CardTitle className="text-3xl font-bold text-center text-gray-800">
+          <CardTitle className="text-3xl font-bold text-center">
             Best Deals
             <div className="w-20 h-1 mx-auto mt-2 rounded bg-emerald-500"></div>
           </CardTitle>
-          <p className="mt-4 text-center text-gray-600">
+          <p className="mt-4 font-bold text-center">
             Discover our most popular and best-selling items
           </p>
         </CardHeader>

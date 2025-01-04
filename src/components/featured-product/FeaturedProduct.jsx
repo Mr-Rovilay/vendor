@@ -10,11 +10,11 @@ const FeaturedProduct = () => {
       <div className="max-pad-container">
         {/* Header Section */}
         <CardHeader className="mb-8">
-          <CardTitle className="text-3xl font-bold text-center text-gray-800">
+          <CardTitle className="text-3xl font-bold text-center">
            Featured Products
             <div className="w-20 h-1 mx-auto mt-2 rounded bg-emerald-500"></div>
           </CardTitle>
-        <p className="mt-4 text-center text-gray-600">
+        <p className="mt-4 font-bold text-center">
           Discover our most featured items
         </p>
         </CardHeader>
