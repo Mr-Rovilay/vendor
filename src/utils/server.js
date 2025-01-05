@@ -1,6 +1,7 @@
 import axios from "axios";
 
-// Get the backend URL from environment variables or use a defaultconst baseURL = "https://multi-vendor-server-pr7r.onrender.com";
+// Get the backend URL from environment variables or use a default
+const baseURL = "https://multi-vendor-server-pr7r.onrender.com";
 //const baseURL = "http://localhost:5000";
 
 // Create an Axios instance
