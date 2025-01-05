@@ -5,10 +5,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from "sonner";
 import ProductDetailsCard from "../Product-detailsCard/ProductDetailsCard";
 import { Badge } from "../ui/badge";
-import { addToWishlist, removeFromWishlist } from "@/redux/actions/wishlistActions";
+import {
+  addToWishlist,
+  removeFromWishlist,
+} from "@/redux/actions/wishlistActions";
 import { addToCart } from "@/redux/actions/cartActions";
 import { Card, CardContent } from "../ui/card";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "../ui/tooltip";
 import { Button } from "../ui/button";
 import Ratings from "../products/Ratings";
 
@@ -51,14 +59,22 @@ const ProductCard = ({ data, isEvent }) => {
     }
   };
 
-  const productPrice = data.originalPrice === 0 ? data.originalPrice : data.discountPrice;
-  const displayName = data.name.length > 30 ? `${data.name.slice(0, 30)}...` : data.name;
+  const productPrice =
+    data.originalPrice === 0 ? data.originalPrice : data.discountPrice;
+  const displayName =
+    data.name.length > 30 ? `${data.name.slice(0, 30)}...` : data.name;
 
   return (
     <Card className="w-[89%] max-w-sm mx-auto overflow-hidden transition-all duration-300 group hover:shadow-lg">
       <CardContent className="p-0">
         <div className="relative">
-          <Link to={`${isEvent === true ? `/product/${data._id}?isEvent=true` : `/product/${data._id}`}`}>
+          <Link
+            to={`${
+              isEvent === true
+                ? `/product/${data._id}?isEvent=true`
+                : `/product/${data._id}`
+            }`}
+          >
             <div className="relative overflow-hidden">
               <img
                 src={data.images && data.images[0]?.url}
@@ -68,7 +84,7 @@ const ProductCard = ({ data, isEvent }) => {
               <div className="absolute inset-0 transition-opacity duration-300 bg-black opacity-0 group-hover:opacity-10" />
             </div>
           </Link>
-          
+
           <div className="absolute flex flex-col space-y-2 transition-opacity duration-300 opacity-0 top-3 right-3 group-hover:opacity-100">
             <TooltipProvider>
               <Tooltip>
@@ -81,17 +97,21 @@ const ProductCard = ({ data, isEvent }) => {
                   >
                     <Heart
                       className={`w-4 h-4 ${
-                        isFavorite ? "fill-red-500 text-red-500" : "text-emerald-600"
+                        isFavorite
+                          ? "fill-red-500 text-red-500"
+                          : "text-emerald-600"
                       }`}
                     />
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent>
-                  <p>{isFavorite ? "Remove from wishlist" : "Add to wishlist"}</p>
+                  <p>
+                    {isFavorite ? "Remove from wishlist" : "Add to wishlist"}
+                  </p>
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
-            
+
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
@@ -137,9 +157,13 @@ const ProductCard = ({ data, isEvent }) => {
           >
             {data.shop.name}
           </Link>
-          
-          <Link 
-            to={`${isEvent === true ? `/product/${data._id}?isEvent=true` : `/product/${data._id}`}`}
+
+          <Link
+            to={`${
+              isEvent === true
+                ? `/product/${data._id}?isEvent=true`
+                : `/product/${data._id}`
+            }`}
             className="block mt-2 group-hover:text-emerald-700"
           >
             <h3 className="text-lg font-semibold leading-tight">
@@ -151,9 +175,20 @@ const ProductCard = ({ data, isEvent }) => {
             <div className="flex items-center space-x-1 text-sm">
               <Ratings rating={data?.ratings} />
             </div>
-            <Badge variant="outline" className="text-emerald-600 border-emerald-200 bg-emerald-50">
-              {data.stock} stock left
-            </Badge>
+            {data.stock <= 0 ? (
+              <Badge className="text-red-600 border-red-200 bg-red-50">
+                Out of Stock
+              </Badge>
+            ) : (
+              <Badge
+                variant="outline"
+                className={`text-emerald-600 border-emerald-200 bg-emerald-50 ${
+                  data.stock <= 3 ? "flash" : ""
+                }`}
+              >
+                {data.stock} stock left
+              </Badge>
+            )}
           </div>
 
           <div className="flex items-center justify-between mt-4">
@@ -173,7 +208,7 @@ const ProductCard = ({ data, isEvent }) => {
           </div>
         </div>
       </CardContent>
-      
+
       {isDetailsOpen && (
         <ProductDetailsCard setOpen={setIsDetailsOpen} data={data} />
       )}
