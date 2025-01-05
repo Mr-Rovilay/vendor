@@ -33,9 +33,9 @@ const Events = () => {
   return (
     <div className="max-pad-container bg-gradient-to-br from-emerald-50 to-white">
       {isLoading ? (
-        <div className="flex items-center justify-center py-10">
-          <Loader2 className="w-10 h-10 text-gray-700 animate-spin" />
-        </div>
+         <div className="flex items-center justify-center min-h-screen">
+         <div className="w-8 h-8 border-b-2 border-gray-900 rounded-full animate-spin" />
+       </div>
       ) : (
         <>
           <CardHeader className="mb-8">

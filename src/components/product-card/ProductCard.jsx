@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Heart, Eye, ShoppingCart } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
@@ -55,16 +55,21 @@ const ProductCard = ({ data, isEvent }) => {
   const displayName = data.name.length > 30 ? `${data.name.slice(0, 30)}...` : data.name;
 
   return (
-    <Card className="w-full max-w-sm mx-auto">
-      <CardContent className="p-4">
+    <Card className="w-full max-w-sm mx-auto overflow-hidden transition-all duration-300 group hover:shadow-lg">
+      <CardContent className="p-0">
         <div className="relative">
-        <Link to={`${isEvent === true ? `/product/${data._id}?isEvent=true` : `/product/${data._id}`}`}>
-            <img
-              src={data.images && data.images?.[0]?.url}
-              className="object-cover w-full h-48 rounded-md"
-            />
+          <Link to={`${isEvent === true ? `/product/${data._id}?isEvent=true` : `/product/${data._id}`}`}>
+            <div className="relative overflow-hidden">
+              <img
+                src={data.images && data.images[0]?.url}
+                className="object-cover w-full h-56 transition-transform duration-300 group-hover:scale-105"
+                alt={data.name}
+              />
+              <div className="absolute inset-0 transition-opacity duration-300 bg-black opacity-0 group-hover:opacity-10" />
+            </div>
           </Link>
-          <div className="absolute flex flex-col space-y-2 top-2 right-1">
+          
+          <div className="absolute flex flex-col space-y-2 transition-opacity duration-300 opacity-0 top-3 right-3 group-hover:opacity-100">
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
@@ -72,21 +77,21 @@ const ProductCard = ({ data, isEvent }) => {
                     variant="secondary"
                     size="icon"
                     onClick={handleWishlistToggle}
+                    className="shadow-md bg-white/90 hover:bg-white"
                   >
                     <Heart
                       className={`w-4 h-4 ${
-                        isFavorite ? "fill-red-500 text-red-500" : ""
+                        isFavorite ? "fill-red-500 text-red-500" : "text-emerald-600"
                       }`}
                     />
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent>
-                  <p>
-                    {isFavorite ? "Remove from wishlist" : "Add to wishlist"}
-                  </p>
+                  <p>{isFavorite ? "Remove from wishlist" : "Add to wishlist"}</p>
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
+            
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
@@ -94,8 +99,9 @@ const ProductCard = ({ data, isEvent }) => {
                     variant="secondary"
                     size="icon"
                     onClick={() => setIsDetailsOpen(true)}
+                    className="shadow-md bg-white/90 hover:bg-white"
                   >
-                    <Eye className="w-4 h-4" />
+                    <Eye className="w-4 h-4 text-emerald-600" />
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent>
@@ -103,6 +109,7 @@ const ProductCard = ({ data, isEvent }) => {
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
+
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
@@ -110,8 +117,9 @@ const ProductCard = ({ data, isEvent }) => {
                     variant="secondary"
                     size="icon"
                     onClick={handleAddToCart}
+                    className="shadow-md bg-white/90 hover:bg-white"
                   >
-                    <ShoppingCart className="w-4 h-4" />
+                    <ShoppingCart className="w-4 h-4 text-emerald-600" />
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent>
@@ -121,34 +129,51 @@ const ProductCard = ({ data, isEvent }) => {
             </TooltipProvider>
           </div>
         </div>
-        <div className="mt-4">
+
+        <div className="p-4">
           <Link
             to={`/shop/preview/${data?.shop._id}`}
-            className="text-sm font-bold text-green-400 hover:underline"
+            className="text-sm font-medium text-emerald-600 hover:text-emerald-700 hover:underline"
           >
             {data.shop.name}
           </Link>
-          <Link to={`${isEvent === true ? `/product/${data._id}?isEvent=true` : `/product/${data._id}`}`} className="block mt-1">
-            <h3 className="text-lg font-semibold leading-tight lowercase">
+          
+          <Link 
+            to={`${isEvent === true ? `/product/${data._id}?isEvent=true` : `/product/${data._id}`}`}
+            className="block mt-2 group-hover:text-emerald-700"
+          >
+            <h3 className="text-lg font-semibold leading-tight">
               {displayName}
             </h3>
           </Link>
-          <div className="flex items-center mt-2 text-xs">
-            <Ratings rating={data?.ratings} />
+
+          <div className="flex items-center justify-between mt-3">
+            <div className="flex items-center space-x-1 text-sm">
+              <Ratings rating={data?.ratings} />
+            </div>
+            <Badge variant="outline" className="text-emerald-600 border-emerald-200 bg-emerald-50">
+              {data.stock} left
+            </Badge>
+          </div>
+
+          <div className="flex items-center justify-between mt-4">
+            <div className="flex items-center gap-2">
+              {data.originalPrice !== data.discountPrice && (
+                <span className="text-sm text-gray-400 line-through">
+                  ${data.originalPrice}
+                </span>
+              )}
+              <span className="text-lg font-bold text-emerald-600">
+                ${productPrice}
+              </span>
+            </div>
+            <Badge className="bg-emerald-100 text-emerald-700 hover:bg-emerald-200">
+              {data?.sold_out} sold
+            </Badge>
           </div>
         </div>
       </CardContent>
-      <div className="flex items-center justify-between px-4 pb-2">
-        <div className="flex gap-2">
-          {data.originalPrice !== data.discountPrice && (
-            <span className="text-sm text-red-500 line-through text-muted-foreground">
-              ${data.originalPrice}
-            </span>
-          )}
-          <span className="text-sm font-bold">${productPrice}</span>
-        </div>
-        <Badge variant="secondary">{data?.sold_out} sold</Badge>
-      </div>
+      
       {isDetailsOpen && (
         <ProductDetailsCard setOpen={setIsDetailsOpen} data={data} />
       )}

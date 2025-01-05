@@ -140,8 +140,8 @@ const ProfileContent = ({ active }) => {
 
   if (isLoadingUser) {
     return (
-      <div className="flex justify-center items-center min-h-[400px]">
-        <Loader2 className="w-8 h-8 animate-spin" />
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="w-8 h-8 border-b-2 border-gray-900 rounded-full animate-spin" />
       </div>
     );
   }

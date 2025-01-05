@@ -33,9 +33,9 @@ const AllProducts = () => {
 
   if (isLoading) {
     return (
-      <div className="w-full h-[450px] flex items-center justify-center">
-        <div className="w-8 h-8 border-4 rounded-full border-primary border-t-transparent animate-spin"></div>
-      </div>
+      <div className="flex items-center justify-center min-h-screen">
+      <div className="w-8 h-8 border-b-2 border-gray-900 rounded-full animate-spin" />
+    </div>
     );
   }
 
