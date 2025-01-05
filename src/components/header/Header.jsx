@@ -77,7 +77,7 @@ const Header = () => {
 
   return (
     <header className="w-full bg-white shadow-sm">
-      <div className="max-pad-container sm:px-6 lg:px-8">
+      <div className="sm:px-6 lg:px-8">
         {/* Top Navigation */}
         <div className="flex items-center justify-between py-4">
           {/* Logo */}
@@ -304,7 +304,7 @@ const Header = () => {
               </Link>
             </Button>
 
-            <div className="flex space-x-3 items-center">
+            <div className="flex items-center space-x-3">
               <WishlistSidebar />
               <CartSidebar />
               {isAuthenticated ? (
@@ -356,16 +356,22 @@ const Header = () => {
         >
           <div className="items-center justify-between mx-auto md:flex">
             {/* Categories Dropdown */}
-            <div className="flex gap-1 mb-3 md:mb-0 items-center">
+            <div className="flex items-center gap-1 mb-3 md:mb-0">
               <DropdownMenu>
                 <Dropdown
                   categoriesData={categoriesData}
                   setDropDown={setDropDown}
                 />
               </DropdownMenu>
-              <div className="md:hidden">
+              <div className="flex gap-1 md:hidden">
+                <div className="">
+
                 <WishlistSidebar />
+                </div>
+                <div className="">
+
                 <CartSidebar />
+                </div>
               </div>
             </div>
 

@@ -46,7 +46,7 @@ const CartSidebar = () => {
       <Button 
         variant="ghost" 
         size="icon" 
-      className="relative w-8 h-8 rounded-full"
+      className="relative w-8 h-8 bg-gray-100 rounded-full"
         onClick={() => setOpenCart(true)}
       >
         <ShoppingCart className="w-5 h-5" />

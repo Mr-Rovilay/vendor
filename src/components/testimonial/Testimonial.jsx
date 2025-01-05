@@ -41,12 +41,13 @@ const Testimonial = () => {
 
   return (
     <div className={`min-h-screen bg-gradient-to-b from-green-50 to-white transition-opacity duration-1000 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
-      <div className="max-w-6xl px-4 py-14 mx-auto">
+      <div className="px-4 mx-auto max-pad-container py-14">
         {/* Header Section with fade-in and slide-down effect */}
         <div className={`text-center mb-16 transition-all duration-1000 transform ${isVisible ? 'translate-y-0 opacity-100' : '-translate-y-10 opacity-0'}`}>
-          <h1 className="mb-4 text-2xl font-bold text-gray-900 md:text-4xl">
+          <h1 className="text-2xl font-bold text-gray-900  md:text-3xl">
             What Our Vendors Say
           </h1>
+          <div className="w-20 h-1 mx-auto mt-2 rounded bg-emerald-500"></div>
           <p className="max-w-2xl mx-auto text-sm text-gray-600">
             Join thousands of successful vendors who have grown their business with our marketplace platform
           </p>
