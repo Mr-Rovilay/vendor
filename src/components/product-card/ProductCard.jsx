@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Heart, Eye, ShoppingCart } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
@@ -62,7 +62,7 @@ const ProductCard = ({ data, isEvent }) => {
             <div className="relative overflow-hidden">
               <img
                 src={data.images && data.images[0]?.url}
-                className="object-cover w-full h-56 transition-transform duration-300 group-hover:scale-105"
+                className="object-cover w-full transition-transform duration-300 h-44 group-hover:scale-105"
                 alt={data.name}
               />
               <div className="absolute inset-0 transition-opacity duration-300 bg-black opacity-0 group-hover:opacity-10" />
