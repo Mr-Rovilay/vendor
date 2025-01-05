@@ -28,11 +28,11 @@ const AllOrders = () => {
   })) || [];
 
   return (
-    <div className="w-full mx-auto mt-10">
+    <div className="w-full mx-auto mt-3">
       <CardHeader>
         <CardTitle>All Orders</CardTitle>
       </CardHeader>
-      <CardContent>
+      <div>
         {isLoading ? (
           <div className="flex items-center justify-center h-64">
             <Loader2 className="w-8 h-8 animate-spin" />
@@ -81,7 +81,7 @@ const AllOrders = () => {
             </TableBody>
           </Table>
         )}
-      </CardContent>
+      </div>
     </div>
   );
 };

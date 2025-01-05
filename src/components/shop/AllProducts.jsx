@@ -45,7 +45,7 @@ const AllProducts = () => {
         <CardTitle className="font-bold">All Products</CardTitle>
       </CardHeader>
       {products?.length > 0 ? (
-        <CardContent>
+        <>
           <div className="border rounded-md">
             <Table>
               <TableHeader>
@@ -87,31 +87,7 @@ const AllProducts = () => {
               </TableBody>
             </Table>
           </div>
-          <Pagination className="mt-4">
-            <PaginationContent>
-              <PaginationItem>
-                <PaginationPrevious href="#" />
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationLink href="#">1</PaginationLink>
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationLink href="#" isActive>
-                  2
-                </PaginationLink>
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationLink href="#">3</PaginationLink>
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationEllipsis />
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationNext href="#" />
-              </PaginationItem>
-            </PaginationContent>
-          </Pagination>
-        </CardContent>
+        </>
       ) : (
         <div className="text-center text-gray-500">No products found</div>
       )}

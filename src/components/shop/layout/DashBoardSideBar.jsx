@@ -15,6 +15,7 @@ import {
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
+
 const sidebarItems = [
   {
     id: 1,
@@ -91,20 +92,20 @@ const SidebarItem = ({ icon: Icon, label, path, isActive }) => {
       variant={isActive ? "secondary" : "ghost"}
       className={cn(
         "w-full justify-start gap-4",
-        isActive && "bg-primary/10 hover:bg-primary/20"
+        isActive && "bg-emerald-100 hover:bg-emerald-200"
       )}
     >
       <Link to={path}>
         <Icon
           className={cn(
             "h-5 w-5",
-            isActive ? "text-primary" : "text-muted-foreground"
+            isActive ? "text-emerald-600" : "text-muted-foreground"
           )}
         />
         <span
           className={cn(
             "hidden md:inline-block",
-            isActive ? "text-primary font-medium" : "text-muted-foreground"
+            isActive ? "text-emerald-600 font-medium" : "text-muted-foreground"
           )}
         >
           {label}
@@ -116,7 +117,7 @@ const SidebarItem = ({ icon: Icon, label, path, isActive }) => {
 
 export default function DashboardSidebar({ active }) {
   return (
-    <div className="h-[calc(100vh-4rem)] w-full border-r bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <div className="h-[calc(100vh-4rem)] w-full border-r">
       <ScrollArea className="w-full h-full p-2">
         <div className="flex flex-col gap-2">
           {sidebarItems.map((item) => (

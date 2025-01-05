@@ -109,7 +109,7 @@ const CreateProduct = () => {
   };
 
   return (
-    <div className="container max-w-2xl p-6 mx-auto bg-white rounded-lg shadow-md">
+    <div className="container max-w-2xl p-3 mx-auto bg-white rounded-lg shadow-md">
       <h1 className="mb-6 text-2xl font-bold text-center">Create Product</h1>
 
       <form onSubmit={handleSubmit} className="space-y-4">

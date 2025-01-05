@@ -67,7 +67,7 @@ const ShopSettings = () => {
   };
 
   return (
-    <Card className="w-full max-w-3xl mx-auto my-8">
+    <div className="w-full max-w-3xl mx-auto my-3">
       <CardHeader>
         <CardTitle className="text-2xl text-center">Shop Settings</CardTitle>
       </CardHeader>
@@ -167,7 +167,7 @@ const ShopSettings = () => {
           </Button>
         </form>
       </CardContent>
-    </Card>
+    </div>
   );
 };
 

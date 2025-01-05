@@ -9,6 +9,7 @@ import { Textarea } from "../ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
 import { categoriesData } from "@/static/data";
 import { Button } from "../ui/button";
+import { CirclePlus } from "lucide-react";
 
 
 const CreateEvent = () => {
@@ -134,7 +135,7 @@ const CreateEvent = () => {
   };
 
   return (
-    <div className="container max-w-2xl p-6 mx-auto rounded-lg shadow-md">
+    <div className="container max-w-2xl p-3 mx-auto rounded-lg shadow-md">
       <h1 className="mb-6 text-2xl font-bold text-center">Create Event</h1>
 
       <form onSubmit={handleSubmit} className="space-y-4">
@@ -285,7 +286,7 @@ const CreateEvent = () => {
             accept="image/*"
           />
           <label htmlFor="images" className="cursor-pointer">
-            <AiOutlinePlusCircle size={30} className="mt-1" />
+            <CirclePlus size={30} className="mt-1" />
           </label>
           <div className="flex flex-wrap gap-4 mt-2">
             {images.map((image, index) => (

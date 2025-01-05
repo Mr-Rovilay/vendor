@@ -71,7 +71,7 @@ const ShopDashboardHero = () => {
     }
   
     return (
-      <div className="w-full p-8 space-y-6">
+      <div className="w-full p-3 space-y-6">
         <h3 className="text-2xl font-semibold">Overview</h3>
         
         <div className="flex flex-col items-center justify-between w-full gap-4 800px:flex-row">

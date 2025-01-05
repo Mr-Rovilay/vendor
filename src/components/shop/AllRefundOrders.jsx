@@ -36,11 +36,11 @@ const AllRefundOrders = () => {
   }
 
   return (
-    <div className="w-full mx-auto mt-8 max-w-7xl">
+    <div className="w-full mx-auto mt-8 ">
       <CardHeader>
         <CardTitle>Refund Orders</CardTitle>
       </CardHeader>
-      <CardContent>
+      <>
         <div className="border rounded-md">
           <Table>
             <TableHeader>
@@ -80,7 +80,7 @@ const AllRefundOrders = () => {
             </TableBody>
           </Table>
         </div>
-      </CardContent>
+      </>
     </div>
   );
 };

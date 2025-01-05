@@ -27,7 +27,7 @@ const ShopProfileData = ({ isOwner }) => {
   return (
     <div className="">
       <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-semibold">Shop Dashboard</h2>
+        <h2 className="text-sm font-semibold md:text-2xl">Shop Dashboard</h2>
         {isOwner && (
           <Link to="/dashboard">
             <Button variant="secondary" size="lg">
@@ -39,9 +39,9 @@ const ShopProfileData = ({ isOwner }) => {
 
       <Tabs defaultValue="products" className="mt-6">
         <TabsList className="flex">
-          <TabsTrigger value="products">Shop Products</TabsTrigger>
-          <TabsTrigger value="events">Running Events</TabsTrigger>
-          <TabsTrigger value="reviews">Shop Reviews</TabsTrigger>
+          <TabsTrigger value="products">Products</TabsTrigger>
+          <TabsTrigger value="events">Events</TabsTrigger>
+          <TabsTrigger value="reviews">Reviews</TabsTrigger>
         </TabsList>
 
         {/* Shop Products Tab */}

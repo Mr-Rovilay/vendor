@@ -57,7 +57,7 @@ const OrderDetails = () => {
   return (
     <Card className="w-full max-w-4xl mx-auto">
       <CardHeader className="flex flex-row items-center justify-between">
-        <CardTitle className="flex items-center text-2xl font-bold">
+        <CardTitle className="flex items-center text-xl font-bold md:text-2xl">
           <Package className="mr-2" />
           Order Details
         </CardTitle>
@@ -68,7 +68,7 @@ const OrderDetails = () => {
         </Link>
       </CardHeader>
       <CardContent>
-        <div className="flex justify-between mb-4">
+        <div className="flex justify-between mb-4 text-sm">
           <p className="text-muted-foreground">
             Order ID: <span className="font-medium">#{data?._id?.slice(0, 8)}</span>
           </p>

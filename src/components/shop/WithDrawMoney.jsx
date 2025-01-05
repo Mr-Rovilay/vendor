@@ -101,9 +101,9 @@ const WithdrawMoney = () => {
   };
 
   return (
-    <div className="p-8 h-[90vh] bg-gray-50">
-      <Card className="flex items-center justify-center w-full h-full bg-white">
-        <CardContent className="space-y-6 text-center">
+    <div className="p-3 h-[90vh] bg-gray-50">
+      <div className="flex items-center justify-center w-full h-full bg-white">
+        <div className="space-y-6 text-center">
           <CircleDollarSign className="w-16 h-16 mx-auto text-green-500" />
           <div>
             <CardTitle className="mb-2 text-3xl font-bold">
@@ -120,8 +120,8 @@ const WithdrawMoney = () => {
           >
             <Banknote className="mr-2" /> Withdraw Funds
           </Button>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
 
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="max-w-2xl">

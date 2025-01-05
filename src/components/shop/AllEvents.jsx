@@ -44,7 +44,7 @@ const AllEvents = () => {
       <CardHeader>
         <CardTitle className="font-bold">All Events</CardTitle>
       </CardHeader>
-      <CardContent>
+      <>
         <div className="border rounded-md">
           <Table>
             <TableHeader>
@@ -92,7 +92,7 @@ const AllEvents = () => {
             No events found
           </div>
         )}
-      </CardContent>
+      </>
     </div>
   );
 };
