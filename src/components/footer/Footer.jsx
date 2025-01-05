@@ -124,7 +124,7 @@ const Footer = () => {
           <div className="flex flex-col items-center justify-between space-y-2 md:flex-row md:space-y-0">
             <div className="flex items-center text-gray-400">
               <Copyright size={16} className="mr-2" />
-              <span>{new Date().getFullYear()} Multi Vendor. All rights reserved.</span>
+              <span className="text-sm md:text-xl">{new Date().getFullYear()} Multi Vendor. All rights reserved.</span>
             </div>
             
             <div className="flex space-x-4">
