@@ -45,7 +45,7 @@ const ChangePassword = () => {
   };
 
   return (
-    <Card className="max-w-lg p-6 mx-auto">
+    <Card className="max-w-lg p-3 mx-auto">
       <h2 className="mb-6 text-2xl font-semibold text-center">
         Change Password
       </h2>

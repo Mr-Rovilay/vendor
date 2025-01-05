@@ -76,7 +76,7 @@ const Header = () => {
   const isLinkActive = (path) => location.pathname === path;
 
   return (
-    <header className="w-full bg-white shadow-sm">
+    <header className="w-full bg-white shadow-sm max-pad-container">
       <div className="sm:px-6 lg:px-8">
         {/* Top Navigation */}
         <div className="flex items-center justify-between py-4">

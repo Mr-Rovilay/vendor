@@ -29,7 +29,7 @@ const ProfileSidebarItem = ({
   <Button
     variant="ghost"
     className={`
-      w-full justify-start items-center gap-3 py-3 px-4 transition-all duration-200
+      w-full items-center justify-center gap-3 py-3 px-4 transition-all duration-200
       ${active === activeNumber ? 'bg-emerald-50 text-emerald-600 hover:bg-emerald-100' : 'hover:bg-gray-50'}
       ${className}
     `}
@@ -126,7 +126,7 @@ const ProfileSidebar = ({ setActive, active }) => {
   ];
 
   return (
-    <Card className="w-full bg-white shadow-sm">
+    <div className="w-full bg-white shadow-sm">
       <CardHeader className="hidden border-b border-gray-100 md:block">
         <CardTitle className="text-lg font-semibold text-gray-900">
           Account Settings
@@ -171,7 +171,7 @@ const ProfileSidebar = ({ setActive, active }) => {
           </div>
         </div>
       </CardContent>
-    </Card>
+    </div>
   );
 };
 

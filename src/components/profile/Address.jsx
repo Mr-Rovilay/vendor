@@ -102,7 +102,7 @@ const Address = () => {
 
   return (
     <Card className="w-full max-w-4xl mx-auto bg-white shadow-lg">
-      <CardHeader className="border-b border-gray-100">
+      <CardHeader className="p-3 border-b border-gray-100">
         <div className="flex flex-col justify-between space-y-4 md:flex-row md:items-center md:space-y-0">
           <CardTitle className="flex items-center text-lg font-semibold text-gray-900 md:text-xl">
             <MapPin className="w-6 h-6 mr-2 text-emerald-600" />
@@ -117,7 +117,7 @@ const Address = () => {
         </div>
       </CardHeader>
 
-      <CardContent className="p-6">
+      <CardContent className="p-3">
         <div className="grid gap-4 md:grid-cols-2">
           {addresses.length > 0 ? (
             addresses.map((item) => (

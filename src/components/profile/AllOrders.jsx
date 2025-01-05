@@ -200,7 +200,7 @@ const AllOrders = () => {
   }
 
   return (
-    <Card className="w-full bg-gradient-to-b from-emerald-50/50">
+    <div className="bg-gradient-to-b from-emerald-50/50">
       <CardHeader>
         <div className="flex flex-col items-start justify-between space-y-2 md:flex-row md:items-center md:space-y-0">
           <CardTitle className="flex items-center text-emerald-800">
@@ -328,7 +328,7 @@ const AllOrders = () => {
           </div>
         </div>
       )}
-    </Card>
+    </div>
   );
 };
 

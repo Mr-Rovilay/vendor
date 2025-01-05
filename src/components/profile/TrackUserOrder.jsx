@@ -81,7 +81,7 @@ const TrackUserOrder = () => {
   // Mobile order card component
   const OrderCard = ({ order }) => (
     <div className="p-4 mb-4 bg-white border rounded-lg shadow-sm">
-      <div className="flex items-center justify-between mb-2">
+      <div className="items-center justify-between mb-2">
         <span className="text-sm font-medium text-emerald-700">ID: {order.id}</span>
         <Badge variant={getStatusVariant(order.status)}>{order.status}</Badge>
       </div>
@@ -198,7 +198,7 @@ const TrackUserOrder = () => {
                       {order.status}
                     </Badge>
                   </TableCell>
-                  <TableCell className="text-right">{order.itemsQty}</TableCell>
+                  <TableCell className="text-center">{order.itemsQty}</TableCell>
                   <TableCell className="text-right text-emerald-600">{order.total}</TableCell>
                   <TableCell className="text-right">
                     <Link to={`/user/track/order/${order.id}`}>
