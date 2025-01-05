@@ -140,7 +140,7 @@ const ProductDetailsCard = ({ setOpen, data }) => {
                   variant="outline" 
                   size="icon" 
                   onClick={incrementCount}
-                  disabled={count >= data.stock}
+                  // disabled={count >= data.stock}
                 >
                   +
                 </Button>

@@ -5,10 +5,9 @@ import { toast } from "sonner";
 import { Button } from "../ui/button";
 import { Minus, Plus, ShoppingCart, Trash2, X } from "lucide-react";
 import { Badge } from "../ui/badge";
-import { AnimatePresence,motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../ui/table";
 import { Link } from "react-router-dom";
-
 
 const CartSidebar = () => {
   const [openCart, setOpenCart] = useState(false);
@@ -24,29 +23,32 @@ const CartSidebar = () => {
     0
   );
 
+  const quantityChangeHandler = (data) => {
+    dispatch(addToCart(data));
+  };
+
   const increment = (item) => {
     if (item.stock <= item.qty) {
       toast.error("Product stock limited!");
     } else {
       const updateCartData = { ...item, qty: item.qty + 1 };
-      dispatch(addToCart(updateCartData));
+      quantityChangeHandler(updateCartData);
     }
   };
 
   const decrement = (item) => {
     if (item.qty > 1) {
       const updateCartData = { ...item, qty: item.qty - 1 };
-      dispatch(addToCart(updateCartData));
+      quantityChangeHandler(updateCartData);
     }
   };
 
   return (
     <>
-      {/* Cart Icon Trigger */}
-      <Button 
-        variant="ghost" 
-        size="icon" 
-      className="relative w-8 h-8 bg-gray-100 rounded-full"
+      <Button
+        variant="ghost"
+        size="icon"
+        className="relative w-8 h-8 bg-gray-100 rounded-full"
         onClick={() => setOpenCart(true)}
       >
         <ShoppingCart className="w-5 h-5" />
@@ -58,17 +60,16 @@ const CartSidebar = () => {
         </Badge>
       </Button>
 
-      {/* Animated Overlay and Sliding Cart Sidebar */}
       <AnimatePresence>
         {openCart && (
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm"
             onClick={() => setOpenCart(false)}
           >
-            <motion.div 
+            <motion.div
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
@@ -76,20 +77,18 @@ const CartSidebar = () => {
               className="fixed top-0 right-0 h-full bg-white shadow-xl w-96"
               onClick={(e) => e.stopPropagation()}
             >
-              {/* Cart Header */}
               <div className="flex items-center justify-between p-4 border-b">
                 <h2 className="text-xl font-bold">Your Cart</h2>
                 <span>{cart && cart.length} items</span>
-                <Button 
-                  variant="ghost" 
-                  size="icon" 
+                <Button
+                  variant="ghost"
+                  size="icon"
                   onClick={() => setOpenCart(false)}
                 >
                   <X className="w-5 h-5" />
                 </Button>
               </div>
 
-              {/* Cart Items */}
               <div className="p-4 overflow-y-auto h-[calc(100%-200px)]">
                 {cart.length === 0 ? (
                   <p className="text-center text-gray-500">Your cart is empty</p>
@@ -106,9 +105,9 @@ const CartSidebar = () => {
                       {cart.map((item) => (
                         <TableRow key={item._id}>
                           <TableCell>
-                            <img 
-                              src={item.images[0]?.url} 
-                              alt={item.name} 
+                            <img
+                              src={item.images[0]?.url}
+                              alt={item.name}
                               className="object-cover w-16 h-16 rounded"
                             />
                           </TableCell>
@@ -138,8 +137,8 @@ const CartSidebar = () => {
                               >
                                 <Plus className="w-4 h-4" />
                               </Button>
-                              <Button 
-                                variant="destructive" 
+                              <Button
+                                variant="destructive"
                                 size="icon"
                                 onClick={() => removeFromCartHandler(item)}
                               >
@@ -154,11 +153,10 @@ const CartSidebar = () => {
                 )}
               </div>
 
-              {/* Cart Summary and Checkout */}
               <div className="absolute bottom-0 left-0 right-0 p-4 border-t bg-gray-50">
                 <div className="flex justify-between mb-4">
                   <span className="font-bold">Total:</span>
-                  <span className="font-bold">US${totalPrice}</span>
+                  <span className="font-bold">US${totalPrice.toFixed(2)}</span>
                 </div>
                 <Button className="w-full" disabled={cart.length === 0}>
                   <Link to="/checkout" className="w-full">

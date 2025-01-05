@@ -31,9 +31,9 @@ const FeaturedProduct = () => {
               </div>
             ))
           ) : (
-            <div className="flex items-center justify-center w-full h-40">
-              <p className="text-lg text-gray-500">Loading featured deals...</p>
-            </div>
+            <div className="flex items-center justify-center">
+         <div className="w-8 h-8 border-b-2 border-gray-900 rounded-full animate-spin" />
+       </div>
           )}
         </div>
       </div>

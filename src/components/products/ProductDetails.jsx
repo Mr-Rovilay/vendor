@@ -20,6 +20,7 @@ import { Badge } from "../ui/badge";
 import Ratings from "./Ratings";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
+import api from "@/utils/server";
 
 
 const ProductDetails = ({ data }) => {
@@ -52,7 +53,11 @@ const ProductDetails = ({ data }) => {
   };
 
   const incrementCount = () => {
-    setCount(count + 1);
+    if (count < data.stock) {
+      setCount(count + 1);
+    } else {
+      toast.warning("Cannot exceed available stock!");
+    }
   };
 
   const addToWishlistHandler = (data) => {
@@ -94,15 +99,15 @@ const ProductDetails = ({ data }) => {
     }
   };
 
-  const addToCartHandler = (id) => {
-    const isItemExists = cart && cart.find((i) => i._id === id);
+  const handleAddToCart = () => {
+    const isItemExists = cart && cart.find((i) => i._id === data._id);
     if (isItemExists) {
       toast.error("Item already in cart!");
     } else {
       if (data.stock < 1) {
         toast.error("Product stock limited!");
       } else {
-        const cartData = { ...data, qty: count };
+        const cartData = { ...data, qty: 1 };
         dispatch(addToCart(cartData));
         toast.success("Item added to cart successfully!");
       }
@@ -262,7 +267,7 @@ const ProductDetails = ({ data }) => {
           <div className="space-y-4">
             <Button
               className="w-full"
-              onClick={() => addToCartHandler(data._id)}
+              onClick={handleAddToCart}
             >
               <ShoppingCart className="w-4 h-4 mr-2" />
               Add to Cart
