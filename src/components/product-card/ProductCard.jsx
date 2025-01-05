@@ -55,7 +55,7 @@ const ProductCard = ({ data, isEvent }) => {
   const displayName = data.name.length > 30 ? `${data.name.slice(0, 30)}...` : data.name;
 
   return (
-    <Card className="w-full max-w-sm mx-auto overflow-hidden transition-all duration-300 group hover:shadow-lg">
+    <Card className="w-[89%] max-w-sm mx-auto overflow-hidden transition-all duration-300 group hover:shadow-lg">
       <CardContent className="p-0">
         <div className="relative">
           <Link to={`${isEvent === true ? `/product/${data._id}?isEvent=true` : `/product/${data._id}`}`}>
@@ -152,18 +152,18 @@ const ProductCard = ({ data, isEvent }) => {
               <Ratings rating={data?.ratings} />
             </div>
             <Badge variant="outline" className="text-emerald-600 border-emerald-200 bg-emerald-50">
-              {data.stock} left
+              {data.stock} stock left
             </Badge>
           </div>
 
           <div className="flex items-center justify-between mt-4">
             <div className="flex items-center gap-2">
               {data.originalPrice !== data.discountPrice && (
-                <span className="text-sm text-gray-400 line-through">
+                <span className="text-sm text-red-400 line-through">
                   ${data.originalPrice}
                 </span>
               )}
-              <span className="text-lg font-bold text-emerald-600">
+              <span className="text-sm font-bold text-emerald-600">
                 ${productPrice}
               </span>
             </div>
