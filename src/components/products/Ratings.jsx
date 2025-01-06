@@ -10,7 +10,7 @@ const Ratings = ({ rating }) => {
       stars.push(
         <Star
           key={i}
-          size={20}
+          size={15}
           color="#f6b100"
           className="mr-1 text-yellow-400 transition-transform transform cursor-pointer fill-current hover:scale-110"
         />
@@ -19,7 +19,7 @@ const Ratings = ({ rating }) => {
       stars.push(
         <StarHalf
           key={i}
-          size={20}
+          size={15}
           color="#f6b100"
           className="mr-1 transition-transform transform cursor-pointer hover:scale-110"
         />
@@ -28,7 +28,7 @@ const Ratings = ({ rating }) => {
       stars.push(
         <StarOff 
           key={i}
-          size={20}
+          size={15}
           color="#dcdcdc"
           className="mr-1 transition-transform transform cursor-pointer hover:scale-110"
         />

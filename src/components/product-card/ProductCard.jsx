@@ -65,7 +65,7 @@ const ProductCard = ({ data, isEvent }) => {
     data.name.length > 30 ? `${data.name.slice(0, 30)}...` : data.name;
 
   return (
-    <Card className="w-[89%] max-w-sm mx-auto overflow-hidden transition-all duration-300 group hover:shadow-lg">
+    <Card className="w-full max-w-sm mx-auto overflow-hidden transition-all duration-300 group hover:shadow-lg">
       <CardContent className="p-0">
         <div className="relative">
           <Link
@@ -78,7 +78,7 @@ const ProductCard = ({ data, isEvent }) => {
             <div className="relative overflow-hidden">
               <img
                 src={data.images && data.images[0]?.url}
-                className="object-cover w-full transition-transform duration-300 h-44 group-hover:scale-105"
+                className="object-cover w-full h-64 transition-transform duration-300 group-hover:scale-105"
                 alt={data.name}
               />
               <div className="absolute inset-0 transition-opacity duration-300 bg-black opacity-0 group-hover:opacity-10" />
@@ -166,7 +166,7 @@ const ProductCard = ({ data, isEvent }) => {
             }`}
             className="block mt-2 group-hover:text-emerald-700"
           >
-            <h3 className="text-lg font-semibold leading-tight">
+            <h3 className="text-lg font-semibold leading-tight capitalize">
               {displayName}
             </h3>
           </Link>
@@ -195,7 +195,7 @@ const ProductCard = ({ data, isEvent }) => {
             <div className="flex items-center gap-2">
               {data.originalPrice !== data.discountPrice && (
                 <span className="text-sm text-red-400 line-through">
-                  ${data.originalPrice}
+                  {data.originalPrice}
                 </span>
               )}
               <span className="text-sm font-bold text-emerald-600">

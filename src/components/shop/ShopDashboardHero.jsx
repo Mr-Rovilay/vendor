@@ -107,51 +107,57 @@ const ShopDashboardHero = () => {
           <h3 className="text-2xl font-semibold">Latest Orders</h3>
           <Card>
             <CardContent className="p-0">
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Order ID</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead>Items Qty</TableHead>
-                    <TableHead>Total</TableHead>
-                    <TableHead className="text-right">Actions</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {orders.map((order) => (
-                    <TableRow key={order._id}>
-                      <TableCell className="font-medium">{order._id}</TableCell>
-                      <TableCell>
-                        <Badge 
-                          variant={order.status === "Delivered" ? "success" : "secondary"}
-                          className={
-                            order.status === "Delivered" 
-                              ? "bg-green-100 text-green-800" 
-                              : "bg-orange-100 text-orange-800"
-                          }
-                        >
-                          {order.status}
-                        </Badge>
-                      </TableCell>
-                      <TableCell>
-                        {order.cart?.reduce((acc, item) => acc + (item.qty || 0), 0) || 0}
-                      </TableCell>
-                      <TableCell>US$ {order.totalPrice || 0}</TableCell>
-                      <TableCell className="text-right">
-                        <Link to={`/shop/order/${order._id}`}>
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            className="hover:text-blue-600"
-                          >
-                            <ArrowRight className="w-4 h-4" />
-                          </Button>
-                        </Link>
-                      </TableCell>
+              {orders.length > 0 ? (
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>Order ID</TableHead>
+                      <TableHead>Status</TableHead>
+                      <TableHead>Items Qty</TableHead>
+                      <TableHead>Total</TableHead>
+                      <TableHead className="text-right">Actions</TableHead>
                     </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
+                  </TableHeader>
+                  <TableBody>
+                    {orders.map((order) => (
+                      <TableRow key={order._id}>
+                        <TableCell className="font-medium">{order._id}</TableCell>
+                        <TableCell>
+                          <Badge 
+                            variant={order.status === "Delivered" ? "success" : "secondary"}
+                            className={
+                              order.status === "Delivered" 
+                                ? "bg-green-100 text-green-800" 
+                                : "bg-orange-100 text-orange-800"
+                            }
+                          >
+                            {order.status}
+                          </Badge>
+                        </TableCell>
+                        <TableCell>
+                          {order.cart?.reduce((acc, item) => acc + (item.qty || 0), 0) || 0}
+                        </TableCell>
+                        <TableCell>US$ {order.totalPrice || 0}</TableCell>
+                        <TableCell className="text-right">
+                          <Link to={`/shop/order/${order._id}`}>
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="hover:text-blue-600"
+                            >
+                              <ArrowRight className="w-4 h-4" />
+                            </Button>
+                          </Link>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              ) : (
+                <div className="flex items-center justify-center p-8 text-gray-500">
+                  <p className="text-center">No new orders yet.</p>
+                </div>
+              )}
             </CardContent>
           </Card>
         </div>
