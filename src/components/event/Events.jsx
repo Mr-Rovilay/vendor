@@ -1,5 +1,4 @@
 import { getAllEvents } from "@/redux/actions/eventAction";
-import { Loader2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { CardHeader, CardTitle } from "../ui/card";
@@ -33,9 +32,9 @@ const Events = () => {
   return (
     <div className="max-pad-container bg-gradient-to-br from-emerald-50 to-white">
       {isLoading ? (
-         <div className="flex items-center justify-center">
-         <div className="w-8 h-8 border-b-2 border-gray-900 rounded-full animate-spin" />
-       </div>
+        <div className="flex items-center justify-center">
+          <div className="w-8 h-8 border-b-2 border-gray-900 rounded-full animate-spin" />
+        </div>
       ) : (
         <>
           <CardHeader className="mb-8">
@@ -49,10 +48,18 @@ const Events = () => {
           </CardHeader>
 
           {popularEvents.length > 0 ? (
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {popularEvents.map((event) => (
-                <EventCard key={event._id} data={event} />
-              ))}
+            <div className="relative">
+              {/* Horizontal Scrollable Container */}
+              <div className="flex gap-6 overflow-x-scroll lg:overflow-hidden snap-x snap-mandatory scrollbar-thin scrollbar-thumb-emerald-400 scrollbar-track-emerald-100">
+                {popularEvents.map((event) => (
+                  <div
+                    key={event._id}
+                    className="min-w-[100%] md:min-w-[33%] snap-center"
+                  >
+                    <EventCard data={event} />
+                  </div>
+                ))}
+              </div>
             </div>
           ) : (
             <div className="py-10 text-center">

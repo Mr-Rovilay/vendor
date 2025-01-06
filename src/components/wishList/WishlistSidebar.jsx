@@ -52,7 +52,7 @@ const WishlistSidebar = () => {
         <Heart className="w-5 h-5" />
         <Badge
           className="absolute text-white bg-green-500 -top-2 -right-2"
-          variant="secondary"
+          // variant="secondary"
         >
           {wishlist.length}
         </Badge>

@@ -35,22 +35,23 @@ const BestDeals = () => {
             Discover our most popular and best-selling items
           </p>
         </CardHeader>
-        
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+
+        {/* Horizontal Scrollable Container */}
+        <div className="flex gap-6 overflow-x-scroll lg:overflow-hidden snap-x snap-mandatory scrollbar-thin scrollbar-thumb-emerald-400 scrollbar-track-emerald-100">
           {data && data.map((item, index) => (
-            <div 
+            <div
               key={index}
-              className="transition-transform duration-300 hover:-translate-y-1"
+              className="min-w-[80%] sm:min-w-[50%] md:min-w-[33%] lg:min-w-[25%] xl:min-w-[20%] snap-center transition-transform duration-300 hover:-translate-y-1"
             >
               <ProductCard data={item} />
             </div>
           ))}
         </div>
-        
+
         {data.length === 0 && (
-         <div className="flex items-center justify-center">
-         <div className="w-8 h-8 border-b-2 border-gray-900 rounded-full animate-spin" />
-       </div>
+          <div className="flex items-center justify-center">
+            <div className="w-8 h-8 border-b-2 border-gray-900 rounded-full animate-spin" />
+          </div>
         )}
       </div>
     </div>
