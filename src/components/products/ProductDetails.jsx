@@ -36,6 +36,10 @@ const ProductDetails = ({ data }) => {
   const { products } = useSelector((state) => state.products);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     if (data?.shop?._id) {
       dispatch(getAllProductsShop(data.shop._id));
     }
@@ -206,15 +210,15 @@ const ProductDetails = ({ data }) => {
 
         {/* Product Information */}
         <div>
-          <h1 className="mb-4 text-3xl font-bold">{data.name}</h1>
+          <h1 className="mb-4 text-3xl font-bold capitalize">{data.name}</h1>
 
           <div className="flex items-center mb-4">
-            <Badge variant="outline" className="mr-2">
+            <Badge variant="outline" className="mr-2 capitalize">
               {data.shop.name}
             </Badge>
             <div className="flex items-center">
               <Ratings rating={data.shop.ratings} />
-              <span className="ml-2 text-sm text-gray-600">
+              <span className="hidden ml-2 text-sm text-gray-600 md:flex">
                 ({data.shop.ratings} ratings)
               </span>
             </div>
@@ -284,7 +288,7 @@ const ProductDetails = ({ data }) => {
                     <AvatarFallback>{data.shop.name.charAt(0)}</AvatarFallback>
                   </Avatar>
                   <div>
-                    <h3 className="font-semibold">{data.shop.name}</h3>
+                    <h3 className="font-semibold capitalize">{data.shop.name}</h3>
                     <Button
                       variant="outline"
                       size="sm"

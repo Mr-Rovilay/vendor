@@ -20,6 +20,10 @@ const ProductsPage = () => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     dispatch(getAllProducts());
   }, [dispatch]);
 

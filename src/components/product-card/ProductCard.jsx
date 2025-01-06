@@ -186,26 +186,27 @@ const ProductCard = ({ data, isEvent }) => {
                   data.stock <= 3 ? "flash" : ""
                 }`}
               >
-                {data.stock} stock left
+                 {data.stock} {data.stock === 1 ? "stock" : "stocks"} left
               </Badge>
             )}
           </div>
 
           <div className="flex items-center justify-between mt-4">
-            <div className="flex items-center gap-2">
-              {data.originalPrice !== data.discountPrice && (
-                <span className="text-sm text-red-400 line-through">
-                  {data.originalPrice}
-                </span>
-              )}
-              <span className="text-sm font-bold text-emerald-600">
-                ${productPrice}
-              </span>
-            </div>
-            <Badge className="bg-emerald-100 text-emerald-700 hover:bg-emerald-200">
-              {data?.sold_out} sold
-            </Badge>
-          </div>
+  <div className="flex items-center gap-2">
+    {data.originalPrice && data.originalPrice !== data.discountPrice && (
+      <span className="text-sm text-red-400 line-through">
+        ${data.originalPrice}
+      </span>
+    )}
+    <span className="text-sm font-bold text-emerald-600">
+      ${productPrice}
+    </span>
+  </div>
+  <Badge className="bg-emerald-100 text-emerald-700 hover:bg-emerald-200">
+    {data?.sold_out} sold
+  </Badge>
+</div>
+
         </div>
       </CardContent>
 

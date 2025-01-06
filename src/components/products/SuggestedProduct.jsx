@@ -16,7 +16,9 @@ const SuggestedProduct = ({ data }) => {
     <div>
       {data ? (
         <div className="max-pad-container">
-           <CardTitle className="mb-5 text-3xl font-bold text-center">Related Product</CardTitle>
+           <CardTitle className="mb-5 text-xl font-bold text-center md:text-3xl">Related Product
+           <div className="w-20 h-1 mx-auto mt-2 rounded bg-emerald-500"></div>
+           </CardTitle>
           <div className="grid grid-cols-1 gap-[20px] md:grid-cols-3 md:gap-[25px] lg:grid-cols-5 lg:gap-[25px] xl:grid-cols-5 xl:gap-[30px] mb-12">
              {
                productData && productData.map((i,index) => (

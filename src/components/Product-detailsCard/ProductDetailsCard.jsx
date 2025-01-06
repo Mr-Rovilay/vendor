@@ -83,7 +83,7 @@ const ProductDetailsCard = ({ setOpen, data }) => {
              <Link to={`/shop/preview/${data.shop._id}`}>
             <div className="flex items-center mt-4 space-x-4">
               <Avatar>
-                <AvatarImage src={data.shop?.shop_avatar?.url} alt={data.shop?.name} />
+                <AvatarImage src={data.shop?.avatar?.url} alt={data.shop?.name} />
                 <AvatarFallback>{data.shop?.name?.charAt(0)}</AvatarFallback>
               </Avatar>
               <div>
@@ -111,11 +111,11 @@ const ProductDetailsCard = ({ setOpen, data }) => {
 
           {/* Right Column - Product Details */}
           <div className="space-y-4">
-            <h1 className="text-2xl font-bold">{data.name}</h1>
+            <h1 className="text-xl font-bold capitalize">{data.name}</h1>
             <p className="text-muted-foreground">{data.description}</p>
 
             <div className="flex items-center space-x-4">
-              <span className="text-2xl font-bold text-primary">
+              <span className="text-xl font-bold text-primary">
                 ${data.discountPrice}
               </span>
               {data.originalPrice > data.discountPrice && (
