@@ -323,7 +323,7 @@ const ProductDetails = ({ data }) => {
         <TabsContent value="reviews">
           <Card>
             <CardContent className="p-6">
-              {data && data.reviews.length > 0 ? (
+              {data && data.reviews > 0 ? (
                 <div className="space-y-4">
                   {data.reviews.map((review, index) => (
                     <div
