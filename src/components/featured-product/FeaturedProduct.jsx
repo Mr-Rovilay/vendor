@@ -18,8 +18,8 @@ const FeaturedProduct = () => {
       const sortedData = [...allProducts].sort(
         (a, b) => b.sold_out - a.sold_out
       );
-      const firstFive = sortedData.slice(0, 5); // Changed to 5 from 10
-      setData(firstFive);
+      const firstTen = sortedData.slice(0, 10); // Changed to 5 from 10
+      setData(firstTen);
     }
   }, [allProducts]);
 
