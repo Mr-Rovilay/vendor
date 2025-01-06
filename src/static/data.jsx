@@ -264,7 +264,8 @@ export const categoriesData = [
     title: "Others",
     subTitle: "",
     image_Url:
-      "https://searchspring.com/wp-content/uploads/2022/10/Hero-Image-Platform-Others-2.png",
+      "https://nairametrics.com/wp-content/uploads/2021/05/E-commerce-websites.jpg",
+
   },
 ];
 
