@@ -138,7 +138,7 @@ const ProductDetails = ({ data }) => {
     : "0.00";
 
   if (!data)
-    return <div className="py-10 text-center">
+    return <div className="w-full h-[450px] flex items-center justify-center">
     <div className="w-8 h-8 border-4 rounded-full border-primary border-t-transparent animate-spin"></div>
     </div>;
 
