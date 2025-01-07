@@ -18,7 +18,7 @@ const FeaturedProduct = () => {
       const sortedData = [...allProducts].sort(
         (a, b) => b.sold_out - a.sold_out
       );
-      const firstTen = sortedData.slice(0, 10); // Adjust number of items to display here
+      const firstTen = sortedData.slice(0, 6); // Adjust number of items to display here
       setData(firstTen);
     }
   }, [allProducts]);
@@ -30,7 +30,7 @@ const FeaturedProduct = () => {
         <CardHeader className="mb-8">
           <CardTitle className="text-2xl font-bold text-center md:text-3xl">
             Featured Products
-            <div className="w-20 h-1 mx-auto mt-2 rounded bg-emerald-500"></div>
+            <div className="w-28 h-1 mx-auto mt-2 rounded bg-emerald-500"></div>
           </CardTitle>
           <p className="mt-4 font-bold text-center">
             Discover our most featured items
@@ -38,7 +38,7 @@ const FeaturedProduct = () => {
         </CardHeader>
 
         {/* Horizontal Scrollable Products Section */}
-        <div className="flex gap-6 overflow-x-scroll lg:overflow-hidden snap-x snap-mandatory scrollbar-thin scrollbar-thumb-emerald-400 scrollbar-track-emerald-100">
+        <div className="flex gap-6 overflow-x-scroll snap-x snap-mandatory scrollbar-thin scrollbar-thumb-emerald-400 scrollbar-track-emerald-100">
           {data.length > 0 ? (
             data.map((product, index) => (
               <div

@@ -76,7 +76,7 @@ const EventCard = ({ data }) => {
 
       <CardHeader className="p-4 space-y-2">
         <div className="flex items-start justify-between gap-2">
-          <h3 className="text-lg font-semibold line-clamp-2">{name}</h3>
+          <h3 className="text-lg font-semibold line-clamp-2 capitalize">{name}</h3>
           {status && <Badge variant="" className={"bg-green-500"}>{status}..</Badge>}
         </div>
         <p className="text-sm text-gray-600 line-clamp-2">{description}</p>

@@ -37,7 +37,7 @@ const BestDeals = () => {
         </CardHeader>
 
         {/* Horizontal Scrollable Container */}
-        <div className="flex gap-6 overflow-x-scroll lg:overflow-hidden snap-x snap-mandatory scrollbar-thin scrollbar-thumb-emerald-400 scrollbar-track-emerald-100">
+        <div className="flex gap-6 overflow-x-scroll  snap-x snap-mandatory scrollbar-thin scrollbar-thumb-emerald-400 scrollbar-track-emerald-100">
           {data && data.map((item, index) => (
             <div
               key={index}

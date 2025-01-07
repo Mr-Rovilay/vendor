@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { Eye, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import { deleteEvent, getAllEventsShop } from "@/redux/actions/eventAction";
-import { CardContent, CardHeader, CardTitle } from "../ui/card";
+import { CardHeader, CardTitle } from "../ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../ui/table";
 import { Button } from "../ui/button";
 
@@ -67,7 +67,7 @@ const AllEvents = () => {
                   <TableCell>{event.sold_out || 0}</TableCell>
                   <TableCell>
                     <div className="flex items-center gap-2">
-                      <Link to={`/product/${event.name.replace(/\s+/g, "-")}`}>
+                      <Link to={`/product/${event._id}?isEvent=true`}>
                         <Button variant="ghost" size="icon">
                           <Eye className="w-4 h-4" />
                         </Button>
