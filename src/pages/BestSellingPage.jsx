@@ -18,7 +18,7 @@ const BestSellingPage = () => {
     const timer = setTimeout(() => {
       // Ensure we have productData and sort by total_sell
       const sortedData = allProducts 
-        ? [...allProducts].sort((a, b) => b.total_sell - a.total_sell)
+        ? [...allProducts].sort((a, b) => b.sold_out - a.sold_out)
         : [];
       
       setData(sortedData);
