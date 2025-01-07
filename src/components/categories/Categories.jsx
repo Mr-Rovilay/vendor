@@ -2,7 +2,6 @@ import { useNavigate } from "react-router-dom";
 import { ScrollArea, ScrollBar } from "../ui/scroll-area";
 import { brandingData, categoriesData } from "@/static/data";
 import { Card, CardContent } from "../ui/card";
-import { motion } from "framer-motion";
 import { ChevronRight } from "lucide-react";
 
 const Categories = () => {
