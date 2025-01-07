@@ -168,7 +168,7 @@ const ProductDetails = ({ data }) => {
           {/* Product Information */}
           <div className="space-y-6">
             <div>
-              <h1 className="mb-2 text-3xl font-bold tracking-tight text-gray-900">{data.name}</h1>
+              <h1 className="mb-2 text-3xl font-bold tracking-tight text-gray-900 capitalize">{data.name}</h1>
               <div className="flex items-center gap-4">
                 <Link to={`/shop/preview/${data?.shop._id}`}>
                   <Badge variant="outline" className="text-emerald-700 bg-emerald-50 hover:bg-emerald-100">
