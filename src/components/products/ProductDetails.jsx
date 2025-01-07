@@ -138,7 +138,9 @@ const ProductDetails = ({ data }) => {
     : "0.00";
 
   if (!data)
-    return <div className="py-10 text-center">Loading product details...</div>;
+    return <div className="py-10 text-center">
+    <div className="w-8 h-8 border-4 rounded-full border-primary border-t-transparent animate-spin"></div>
+    </div>;
 
   return (
     <div className="px-4 py-8 max-pad-container md:max-w-6xl md:mx-auto">
