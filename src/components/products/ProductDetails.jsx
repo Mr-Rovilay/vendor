@@ -1,7 +1,7 @@
-
-import { addToCart } from "@/redux/actions/cartActions";
-import { getAllProductsShop } from "@/redux/actions/productAction";
-import { addToWishlist, removeFromWishlist } from "@/redux/actions/wishlistActions";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 import {
   Heart,
   ShoppingCart,
@@ -9,19 +9,17 @@ import {
   ChevronLeft,
   ChevronRight,
 } from "lucide-react";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
-import { toast } from "sonner";
 import { Card, CardContent } from "../ui/card";
 import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
 import { Badge } from "../ui/badge";
-import Ratings from "./Ratings";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
+import Ratings from "./Ratings";
+import { addToCart } from "@/redux/actions/cartActions";
+import { getAllProductsShop } from "@/redux/actions/productAction";
+import { addToWishlist, removeFromWishlist } from "@/redux/actions/wishlistActions";
 import api from "@/utils/server";
-
 
 const ProductDetails = ({ data }) => {
   const [count, setCount] = useState(1);
@@ -37,399 +35,383 @@ const ProductDetails = ({ data }) => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, []);
-
-  useEffect(() => {
     if (data?.shop?._id) {
       dispatch(getAllProductsShop(data.shop._id));
     }
     if (wishlist && wishlist.find((i) => i._id === data?._id)) {
       setClick(true);
-    } else {
-      setClick(false);
     }
   }, [data, wishlist, dispatch]);
 
-  const decrementCount = () => {
-    if (count > 1) {
+  const handleQuantityChange = (type) => {
+    if (type === "dec" && count > 1) {
       setCount(count - 1);
-    }
-  };
-
-  const incrementCount = () => {
-    if (count < data.stock) {
+    } else if (type === "inc" && count < data.stock) {
       setCount(count + 1);
-    } else {
+    } else if (type === "inc") {
       toast.warning("Cannot exceed available stock!");
     }
   };
 
-  const addToWishlistHandler = (data) => {
+  const handleWishlist = () => {
     setClick(!click);
-    dispatch(addToWishlist(data));
-    toast.success("Added to wishlist");
-  };
-
-  const removeFromWishlistHandler = (data) => {
-    setClick(!click);
-    dispatch(removeFromWishlist(data));
-    toast.success("Removed from wishlist");
+    if (!click) {
+      dispatch(addToWishlist(data));
+      toast.success("Added to wishlist");
+    } else {
+      dispatch(removeFromWishlist(data));
+      toast.success("Removed from wishlist");
+    }
   };
 
   const handleMessageSubmit = async () => {
-    if (isAuthenticated) {
-      try {
-        const groupTitle = data._id + user._id;
-        const userId = user._id;
-        const sellerId = data.shop._id;
+    if (!isAuthenticated) {
+      return toast.error("Please login to create a conversation");
+    }
 
-        const response = await api.post(
-          `/conversation/create-new-conversation`,
-          {
-            groupTitle,
-            userId,
-            sellerId,
-          }
-        );
-
-        navigate(`/inbox?${response.data.conversation._id}`);
-      } catch (error) {
-        toast.error(
-          error.response?.data?.message || "Error creating conversation"
-        );
-      }
-    } else {
-      toast.error("Please login to create a conversation");
+    try {
+      const response = await api.post("/conversation/create-new-conversation", {
+        groupTitle: data._id + user._id,
+        userId: user._id,
+        sellerId: data.shop._id,
+      });
+      navigate(`/inbox?${response.data.conversation._id}`);
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Error creating conversation");
     }
   };
 
   const handleAddToCart = () => {
-    const isItemExists = cart && cart.find((i) => i._id === data._id);
-    if (isItemExists) {
-      toast.error("Item already in cart!");
-    } else {
-      if (data.stock < 1) {
-        toast.error("Product stock limited!");
-      } else {
-        const cartData = { ...data, qty: 1 };
-        dispatch(addToCart(cartData));
-        toast.success("Item added to cart successfully!");
-      }
+    if (cart?.find((i) => i._id === data._id)) {
+      return toast.error("Item already in cart!");
     }
+    if (data.stock < 1) {
+      return toast.error("Product stock limited!");
+    }
+    dispatch(addToCart({ ...data, qty: count }));
+    toast.success("Item added to cart successfully!");
   };
 
-  const totalReviewsLength =
-    products?.reduce(
-      (acc, product) => acc + (product.reviews?.length || 0),
-      0
-    ) || 0;
-  const totalRatings =
-    products?.reduce(
-      (acc, product) =>
-        acc +
-        (product.reviews?.reduce(
-          (sum, review) => sum + (review.rating || 0),
-          0
-        ) || 0),
-      0
-    ) || 0;
-  const averageRating = totalReviewsLength
-    ? (totalRatings / totalReviewsLength).toFixed(2)
-    : "0.00";
+  const totalReviewsLength = products?.reduce((acc, product) => acc + (product.reviews?.length || 0), 0) || 0;
+  const totalRatings = products?.reduce((acc, product) => 
+    acc + (product.reviews?.reduce((sum, review) => sum + (review.rating || 0), 0) || 0), 0) || 0;
+  const averageRating = totalReviewsLength ? (totalRatings / totalReviewsLength).toFixed(2) : "0.00";
 
-  if (!data)
-    return <div className="w-full h-[450px] flex items-center justify-center">
-    <div className="w-8 h-8 border-4 rounded-full border-primary border-t-transparent animate-spin"></div>
-    </div>;
+  if (!data) {
+    return (
+      <div className="w-full h-[450px] flex items-center justify-center">
+        <div className="w-8 h-8 border-4 rounded-full border-emerald-600 border-t-transparent animate-spin" />
+      </div>
+    );
+  }
 
   return (
-    <div className="px-4 py-8 max-pad-container md:max-w-6xl md:mx-auto">
-      <div className="grid gap-8 md:grid-cols-2">
-        {/* Image Gallery */}
-        <div>
-          <Card className="mb-4">
-            <CardContent className="p-4">
-              <div className="relative">
-                <img
-                  src={data.images && data.images?.[selectedImage]?.url}
-                  alt={data.name}
-                  className="object-cover w-full rounded-lg h-96"
-                />
-
-                {data.images.length > 1 && (
-                  <div className="absolute inset-y-0 left-0 flex items-center">
-                    <Button
-                      variant="outline"
-                      size="icon"
-                      className="mr-2"
-                      onClick={() =>
-                        setSelectedImage((prev) =>
-                          prev > 0 ? prev - 1 : data.images.length - 1
-                        )
-                      }
-                    >
-                      <ChevronLeft className="w-4 h-4" />
-                    </Button>
-                  </div>
-                )}
-                {data.images.length > 1 && (
-                  <div className="absolute inset-y-0 right-0 flex items-center">
-                    <Button
-                      variant="outline"
-                      size="icon"
-                      onClick={() =>
-                        setSelectedImage((prev) =>
-                          prev < data.images.length - 1 ? prev + 1 : 0
-                        )
-                      }
-                    >
-                      <ChevronRight className="w-4 h-4" />
-                    </Button>
-                  </div>
-                )}
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Thumbnail Gallery */}
-          <div className="flex justify-center space-x-2">
-            {data.images.map((image, index) => (
-              <img
-                key={index}
-                src={image.url}
-                alt={`Thumbnail ${index + 1}`}
-                className={cn(
-                  "w-16 h-16 object-cover rounded-md cursor-pointer border-2",
-                  selectedImage === index
-                    ? "border-primary"
-                    : "border-transparent opacity-50 hover:opacity-100"
-                )}
-                onClick={() => setSelectedImage(index)}
-              />
-            ))}
-          </div>
-        </div>
-
-        {/* Product Information */}
-        <div>
-          <h1 className="mb-4 text-3xl font-bold capitalize">{data.name}</h1>
-
-          <div className="flex items-center mb-4">
-            <Badge variant="outline" className="mr-2 capitalize">
-              {data.shop.name}
-            </Badge>
-            <div className="flex items-center">
-              <Ratings rating={data.shop.ratings} />
-              <span className="hidden ml-2 text-sm text-gray-600 md:flex">
-                ({data.shop.ratings} ratings)
-              </span>
-            </div>
-          </div>
-
-          <p className="mb-4 text-gray-600">{data.description}</p>
-
-          <div className="flex items-center mb-4 space-x-2">
-            <span className="font-bold text-xm text-primary">
-              ${data.discountPrice}
-            </span>
-            {data.originalPrice > data.discountPrice && (
-              <span className="text-red-400 line-through text-xm">
-                ${data.originalPrice}
-              </span>
-            )}
-          </div>
-
-          <div className="flex items-center mb-4 space-x-4">
-            <div className="flex items-center space-x-2">
-              <Button variant="outline" size="icon" onClick={decrementCount}>
-                -
-              </Button>
-              <span className="px-4 py-2 border rounded">{count}</span>
-              <Button variant="outline" size="icon" onClick={incrementCount}>
-                +
-              </Button>
-            </div>
-
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() =>
-                click
-                  ? removeFromWishlistHandler(data)
-                  : addToWishlistHandler(data)
-              }
-            >
-              <Heart
-                className={cn(
-                  "h-6 w-6",
-                  click
-                    ? "text-red-500 fill-red-500"
-                    : "text-gray-500 hover:text-red-500"
-                )}
-              />
-            </Button>
-          </div>
-
+    <div className="py-8 bg-white">
+      <div className="mx-auto max-pad-container">
+        <div className="grid gap-8 md:grid-cols-2">
+          {/* Image Gallery */}
           <div className="space-y-4">
-            <Button
-              className="w-full"
-              onClick={handleAddToCart}
-            >
-              <ShoppingCart className="w-4 h-4 mr-2" />
-              Add to Cart
-            </Button>
+            <Card className="overflow-hidden border-emerald-100">
+              <CardContent className="p-0">
+                <div className="relative aspect-square">
+                  <img
+                    src={data.images[selectedImage]?.url}
+                    alt={data.name}
+                    className="object-cover w-full h-full"
+                  />
+                  {data.images.length > 1 && (
+                    <>
+                      <Button
+                        variant="outline"
+                        size="icon"
+                        className="absolute transform -translate-y-1/2 left-4 top-1/2 bg-white/80 hover:bg-white"
+                        onClick={() => setSelectedImage((prev) => (prev > 0 ? prev - 1 : data.images.length - 1))}
+                      >
+                        <ChevronLeft className="w-4 h-4" />
+                      </Button>
+                      <Button
+                        variant="outline"
+                        size="icon"
+                        className="absolute transform -translate-y-1/2 right-4 top-1/2 bg-white/80 hover:bg-white"
+                        onClick={() => setSelectedImage((prev) => (prev < data.images.length - 1 ? prev + 1 : 0))}
+                      >
+                        <ChevronRight className="w-4 h-4" />
+                      </Button>
+                    </>
+                  )}
+                </div>
+              </CardContent>
+            </Card>
 
-            <Card>
-              <CardContent className="p-4">
-                <div className="flex items-center space-x-4">
-                  <Avatar>
-                    <AvatarImage
-                      src={data.shop.avatar.url}
-                      className="object-cover rounded-full"
-                    />
-                    <AvatarFallback>{data.shop.name.charAt(0)}</AvatarFallback>
-                  </Avatar>
-                  <div>
-                    <h3 className="font-semibold capitalize">{data.shop.name}</h3>
+            <div className="flex gap-2 overflow-x-auto">
+              {data.images.map((image, index) => (
+                <button
+                  key={index}
+                  className={cn(
+                    "flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2 transition-all",
+                    selectedImage === index 
+                      ? "border-emerald-600 opacity-100" 
+                      : "border-transparent opacity-50 hover:opacity-100"
+                  )}
+                  onClick={() => setSelectedImage(index)}
+                >
+                  <img
+                    src={image.url}
+                    alt={`Product ${index + 1}`}
+                    className="object-cover w-full h-full"
+                  />
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Product Information */}
+          <div className="space-y-6">
+            <div>
+              <h1 className="mb-2 text-3xl font-bold tracking-tight text-gray-900">{data.name}</h1>
+              <div className="flex items-center gap-4">
+                <Link to={`/shop/preview/${data?.shop._id}`}>
+                  <Badge variant="outline" className="text-emerald-700 bg-emerald-50 hover:bg-emerald-100">
+                    {data.shop.name}
+                  </Badge>
+                </Link>
+                <div className="flex items-center">
+                  <Ratings rating={data.ratings} />
+                  <span className="ml-2 text-sm text-gray-500">({data.ratings} ratings)</span>
+                </div>
+              </div>
+            </div>
+
+            <p className="text-gray-600">{data.description}</p>
+
+            <div className="flex items-baseline gap-4">
+              <span className="text-3xl font-bold text-emerald-600">${data.discountPrice}</span>
+              {data.originalPrice > data.discountPrice && (
+                <span className="text-lg text-gray-400 line-through">${data.originalPrice}</span>
+              )}
+            </div>
+
+            <div className="flex items-center gap-4">
+              <div className="flex items-center border rounded-lg">
+                <Button 
+                  variant="ghost" 
+                  size="icon" 
+                  className="text-emerald-600 hover:text-emerald-700"
+                  onClick={() => handleQuantityChange("dec")}
+                >
+                  -
+                </Button>
+                <span className="w-12 text-center">{count}</span>
+                <Button 
+                  variant="ghost" 
+                  size="icon"
+                  className="text-emerald-600 hover:text-emerald-700"
+                  onClick={() => handleQuantityChange("inc")}
+                >
+                  +
+                </Button>
+              </div>
+              <Button
+                variant="outline"
+                size="icon"
+                className={cn(
+                  "border-emerald-200 hover:border-emerald-300",
+                  click && "bg-red-50"
+                )}
+                onClick={handleWishlist}
+              >
+                <Heart
+                  className={cn(
+                    "w-5 h-5",
+                    click ? "fill-red-500 text-red-500" : "text-emerald-600"
+                  )}
+                />
+              </Button>
+            </div>
+
+            <div className="grid gap-4">
+              <Button 
+                size="lg" 
+                className="w-full bg-emerald-600 hover:bg-emerald-700"
+                onClick={handleAddToCart}
+              >
+                <ShoppingCart className="w-5 h-5 mr-2" />
+                Add to Cart
+              </Button>
+
+              <Card className="border-emerald-100">
+                <CardContent className="flex items-center gap-4 p-4">
+                  <Link to={`/shop/preview/${data?.shop._id}`}>
+                    <Avatar className="w-12 h-12 border-2 border-emerald-200">
+                      <AvatarImage src={data.shop.avatar?.url} />
+                      <AvatarFallback className="bg-emerald-50 text-emerald-700">
+                        {data.shop.name.charAt(0)}
+                      </AvatarFallback>
+                    </Avatar>
+                  </Link>
+                  <div className="flex-1">
+                    <Link 
+                      to={`/shop/preview/${data?.shop._id}`}
+                      className="text-lg font-semibold hover:text-emerald-700"
+                    >
+                      {data.shop.name}
+                    </Link>
                     <Button
                       variant="outline"
                       size="sm"
+                      className="mt-2 border-emerald-200 text-emerald-700 hover:bg-emerald-50"
                       onClick={handleMessageSubmit}
-                      className="mt-2"
                     >
                       <MessageSquare className="w-4 h-4 mr-2" />
                       Send Message
                     </Button>
                   </div>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </div>
+
+        <Tabs defaultValue="details" className="mt-12">
+          <TabsList className="grid w-full grid-cols-3 bg-emerald-50">
+            <TabsTrigger 
+              value="details"
+              className="data-[state=active]:bg-white data-[state=active]:text-emerald-700"
+            >
+              Product Details
+            </TabsTrigger>
+            <TabsTrigger 
+              value="reviews"
+              className="data-[state=active]:bg-white data-[state=active]:text-emerald-700"
+            >
+              Reviews
+            </TabsTrigger>
+            <TabsTrigger 
+              value="seller"
+              className="data-[state=active]:bg-white data-[state=active]:text-emerald-700"
+            >
+              Seller Information
+            </TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="details">
+            <Card className="border-emerald-100">
+              <CardContent className="p-6">
+                <p className="leading-relaxed text-gray-600">{data.description}</p>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="reviews">
+            <Card className="border-emerald-100">
+              <CardContent className="p-6">
+                <div className="space-y-6">
+                  {data.reviews?.length > 0 ? (
+                    data.reviews.map((item, index) => (
+                      <div
+                        key={index}
+                        className="flex gap-4 pb-6 border-b border-emerald-100 last:border-0"
+                      >
+                        <Avatar className="border-2 border-emerald-100">
+                          <AvatarImage src={user.avatar?.url} className="object-cover"/>
+                          <AvatarFallback className="bg-emerald-50 text-emerald-700">
+                            {user.name?.charAt(0) || "G"}
+                          </AvatarFallback>
+                        </Avatar>
+                        <div>
+                          <div className="flex items-center gap-2">
+                            <span className="font-semibold">
+                              {user.name || "Guest"}
+                            </span>
+                            <Ratings rating={item.rating} />
+                          </div>
+                          <p className="mt-2 text-gray-600">{item.comment}</p>
+                        </div>
+                      </div>
+                    ))
+                  ) : (
+                    <p className="text-center text-gray-500">
+                      No reviews yet for this product.
+                    </p>
+                  )}
                 </div>
               </CardContent>
             </Card>
-          </div>
-        </div>
-      </div>
+          </TabsContent>
 
-      {/* Product Details Tabs */}
-      <Tabs defaultValue="details" className="mt-8">
-        <TabsList className="grid w-full grid-cols-3">
-          <TabsTrigger value="details">Product Details</TabsTrigger>
-          <TabsTrigger value="reviews">Reviews</TabsTrigger>
-          <TabsTrigger value="seller">Seller Information</TabsTrigger>
-        </TabsList>
-
-        <TabsContent value="details">
-          <Card>
-            <CardContent className="p-6">
-              <p className="leading-relaxed text-gray-600">
-                {data.description}
-              </p>
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        <TabsContent value="reviews">
-          <Card>
-            <CardContent className="p-6">
-              {data && data.reviews > 0 ? (
-                <div className="space-y-4">
-                  {data.reviews.map((review, index) => (
-                    <div
-                      key={index}
-                      className="flex items-start pb-4 space-x-4 border-b"
-                    >
-                      <Avatar>
-                        <AvatarImage
-                          src={
-                            data?.shop?.avatar?.url ||
-                            "/path-to-default-avatar.png"
-                          }
-                          className="object-cover rounded-full"
-                        />
-
-                        <AvatarFallback>{user?.name?.charAt(0)}</AvatarFallback>
-                      </Avatar>
+          <TabsContent value="seller">
+            <Card className="border-emerald-100">
+              <CardContent className="p-6">
+                <div className="grid gap-8 md:grid-cols-2">
+                  <div className="space-y-6">
+                    <div className="flex items-center gap-4">
+                      <Link to={`/shop/preview/${data.shop._id}`}>
+                        <Avatar className="w-16 h-16 border-2 border-emerald-200">
+                          <AvatarImage src={data.shop.avatar?.url} />
+                          <AvatarFallback className="text-xl bg-emerald-50 text-emerald-700">
+                            {data.shop.name.charAt(0)}
+                          </AvatarFallback>
+                        </Avatar>
+                      </Link>
                       <div>
-                        <div className="flex items-center space-x-2">
-                          <span className="font-semibold">
-                            {user?.name || "Guest"}
+                        <Link 
+                          to={`/shop/preview/${data.shop._id}`}
+                          className="text-xl font-semibold hover:text-emerald-700"
+                        >
+                          {data.shop.name}
+                        </Link>
+                        <div className="flex items-center mt-1">
+                          <Ratings rating={averageRating} />
+                          <span className="ml-2 text-sm text-gray-500">
+                            ({totalReviewsLength} reviews)
                           </span>
-                          <Ratings rating={review.rating} />
                         </div>
-                        <p className="mt-1 text-gray-600">{review.comment}</p>
                       </div>
                     </div>
-                  ))}
-                </div>
-              ) : (
-                <p className="text-center text-gray-600">
-                  No reviews yet for this product.
-                </p>
-              )}
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        <TabsContent value="seller">
-          <Card>
-            <CardContent className="p-6">
-              <div className="flex items-center mb-4 space-x-4">
-                <Link to={`/shop/preview/${data.shop._id}`}>
-                  <Avatar className="w-16 h-16">
-                    <AvatarImage
-                      src={data.shop.avatar.url}
-                      className="object-cover rounded-full"
-                    />
-                    <AvatarFallback>{data.shop.name.charAt(0)}</AvatarFallback>
-                  </Avatar>
-                </Link>
-
-                <div>
-                  <h3 className="text-xl font-semibold">{data.shop.name}</h3>
-                  <div className="flex items-center">
-                    <Ratings rating={data.shop.ratings} />
-                    <span className="ml-2 text-sm text-gray-600">
-                      ({data.shop.ratings} ratings)
-                    </span>
+                    <div className="space-y-4">
+                      <p className="text-gray-600">{data.shop.description}</p>
+                      <p className="text-sm text-emerald-600">{data.shop.email}</p>
+                      
+                      <div className="grid grid-cols-2 gap-4 p-4 rounded-lg bg-emerald-50">
+                        <div className="space-y-2">
+                          <p className="text-sm text-gray-600">
+                            <span className="block font-medium text-gray-900">Joined</span>
+                            {new Date(data.shop.createdAt).toLocaleDateString()}
+                          </p>
+                          <p className="text-sm text-gray-600">
+                            <span className="block font-medium text-gray-900">Total Products</span>
+                            {products?.length || 0}
+                          </p>
+                        </div>
+                        <div className="space-y-2">
+                          <p className="text-sm text-gray-600">
+                            <span className="block font-medium text-gray-900">Total Reviews</span>
+                            {totalReviewsLength}
+                          </p>
+                          <p className="text-sm text-gray-600">
+                            <span className="block font-medium text-gray-900">Average Rating</span>
+                            {averageRating} / 5.0
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex items-center justify-center md:justify-end">
+                    <Link to={`/shop/preview/${data.shop._id}`}>
+                      <Button 
+                        size="lg"
+                        className="bg-emerald-600 hover:bg-emerald-700"
+                      >
+                        Visit Shop
+                      </Button>
+                    </Link>
                   </div>
                 </div>
-              </div>
-
-              <div className="grid gap-4 md:grid-cols-2">
-                <div>
-                  <p className="mb-4 text-gray-600">{data.shop.description}</p>
-                  <p className="text-sm text-gray-600">{data.shop.email}</p>
-                  <div className="space-y-2">
-                    <p>
-                      <strong>Joined:</strong>{" "}
-                      <span className="font-medium">
-                        {new Date(data.shop.createdAt).toLocaleDateString()}
-                      </span>
-                    </p>
-                    <p>
-                      <strong>Total Products:</strong>{" "}
-                      <span className="font-medium">
-                        {products?.length || 0}
-                      </span>
-                    </p>
-                    <p>
-                      <strong>Total Reviews:</strong>{" "}
-                      <span className="font-medium">{totalReviewsLength}</span>
-                    </p>
-                    <p>
-                      <strong>Average Rating:</strong>{" "}
-                      <span className="font-medium">{averageRating}</span>
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-end justify-end">
-                  <Link to={`/shop/preview/${data.shop._id}`}>
-                    <Button>Visit Shop</Button>
-                  </Link>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-      </Tabs>
+              </CardContent>
+            </Card>
+          </TabsContent>
+        </Tabs>
+      </div>
     </div>
   );
 };
