@@ -347,9 +347,9 @@ const ProductDetails = ({ data }) => {
                     <div className="flex items-center gap-4">
                       <Link to={`/shop/preview/${data.shop._id}`}>
                         <Avatar className="w-16 h-16 border-2 border-emerald-200">
-                          <AvatarImage src={data.shop.avatar?.url} />
+                          <AvatarImage src={data.shop?.avatar?.url} />
                           <AvatarFallback className="text-xl bg-emerald-50 text-emerald-700">
-                            {data.shop.name.charAt(0)}
+                            {data.shop?.name?.charAt(0)}
                           </AvatarFallback>
                         </Avatar>
                       </Link>
