@@ -243,7 +243,7 @@ const ProductDetails = ({ data }) => {
                 <CardContent className="flex items-center gap-4 p-4">
                   <Link to={`/shop/preview/${data?.shop._id}`}>
                     <Avatar className="w-12 h-12 border-2 border-emerald-200">
-                      <AvatarImage src={data.shop.avatar?.url} />
+                      <AvatarImage src={data.shop?.avatar?.url} />
                       <AvatarFallback className="bg-emerald-50 text-emerald-700">
                         {data.shop.name.charAt(0)}
                       </AvatarFallback>
