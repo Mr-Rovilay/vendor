@@ -243,7 +243,7 @@ const ProductDetails = ({ data }) => {
                 <CardContent className="flex items-center gap-4 p-4">
                   <Link to={`/shop/preview/${data?.shop._id}`}>
                     <Avatar className="w-12 h-12 border-2 border-emerald-200">
-                      <AvatarImage src={data.shop?.avatar?.url} />
+                      <AvatarImage src={data.shop?.avatar?.url || "/default-avatar.png"} />
                       <AvatarFallback className="bg-emerald-50 text-emerald-700">
                         {data.shop.name.charAt(0)}
                       </AvatarFallback>
@@ -307,25 +307,24 @@ const ProductDetails = ({ data }) => {
               <CardContent className="p-6">
                 <div className="space-y-6">
                   {data.reviews?.length > 0 ? (
-                    data.reviews.map((item, index) => (
-                      <div
-                        key={index}
-                        className="flex gap-4 pb-6 border-b border-emerald-100 last:border-0"
-                      >
-                        <Avatar className="border-2 border-emerald-100">
-                          <AvatarImage src={user.avatar?.url || "/default-avatar.png"} className="object-cover"/>
+                    data.reviews.map((review, index) => (
+                      <div key={index} className="flex gap-4">
+                        <Avatar className="w-12 h-12">
+                          <AvatarImage src={""} alt={review.user.name} />
                           <AvatarFallback className="bg-emerald-50 text-emerald-700">
-                            {user.name?.charAt(0) || "G"}
+                           
+                            {user?.name?.charAt(0)}
                           </AvatarFallback>
                         </Avatar>
-                        <div>
+                        <div className="flex-1">
                           <div className="flex items-center gap-2">
-                            <span className="font-semibold">
-                              {user.name || "Guest"}
-                            </span>
-                            <Ratings rating={item.rating} />
+                            <h3 className="font-medium">{review.user.name}</h3>
+                            <Ratings rating={review.rating} />
                           </div>
-                          <p className="mt-2 text-gray-600">{item.comment}</p>
+                          <p className="mt-1 text-gray-600">{review.comment}</p>
+                          <p className="mt-1 text-sm text-gray-500">
+                            {new Date(review.createdAt).toLocaleDateString()}
+                          </p>
                         </div>
                       </div>
                     ))
@@ -338,6 +337,7 @@ const ProductDetails = ({ data }) => {
               </CardContent>
             </Card>
           </TabsContent>
+
 
           <TabsContent value="seller">
             <Card className="border-emerald-100">
