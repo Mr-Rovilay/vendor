@@ -1,9 +1,13 @@
 import ShopProfileData from "@/components/profile/ShopProfileData";
 import ShopInfo from "@/components/shop/ShopInfo";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { useEffect } from "react";
 
 
-export default function ShopPreviewPage() {  
+export default function ShopPreviewPage() { 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []); 
   return (
     <div className="min-h-screen bg-muted/30">
       <div className="py-8 max-pad-container">
